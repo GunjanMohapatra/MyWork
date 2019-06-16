@@ -1,4 +1,4 @@
 function click()
 {
-  alert("if javascript works")
+  document.getElementById("txt").value = "Hello Script"
 }
