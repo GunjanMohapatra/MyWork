@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<script language="javascript">
+var x='{"1/1/2019":"New Year\'s Day","4/19/2019":"Good Friday","4/22/2019":"Easter Monday","5/20/2019":"Victoria Day/National Patriots Day","7/1/2019":"Canada Day","9/2/2019":"Labor Day","10/14/2019":"Thanksgiving Day","11/11/2019":"Remembrance Day","12/25/2019":"Christmas Day", "12/26/2019":"Boxing Day"}',Holidays="",weeks=new Array(10),HolidayStr="",HolidaysCounter=0,weekDays=new Array("Sun","Mon","Tue","Wed","Thu","Fri","Sat"),td_notCurrent="<td style='color:silver;text-align:center;border:1px solid silver;'>",td_Current="<td style='color:black;text-align:center;border:1px solid silver;'>",td_Daysheading="<td style='color:white;text-align:center;background:gray;border:1px solid silver;width:30px'>",td_Today="<td style='text-align:center;border:1px solid silver;background:yellow;'>",td_Holidays="<td title style='color:red;text-align:center;border:1px solid silver;'>",Today=new Date,curDay=Today.getDate(),curMonth=Today.getMonth(),curYear=Today.getFullYear(),TotalWorkingDays=0;function showHide(e,t){document.getElementById(e).style.display=t}function addHolidays(){HolidayStr="",HolidaysCounter=TotalWorkingDays=0,document.getElementById("scrCalendar").innerHTML="",Holidays=JSON.parse(document.getElementById("txtAddHolidays").value),load(),showHide("divAdd","none")}function CreateCalendar(e,t,a){var r=e,n=t,d=0,o=new Date(n,r+1,0).getDate(),l=new Date(n,r,1),s=l.toLocaleString("en-us",{month:"long"}),y=1-l.getDay(),i=0;(i=new Date(n,r,o).getDay())<7&&(i=13-i);var c="";weeks[0]=new Array(1),weeks[1]=new Array(7),weeks[2]=new Array(7),weeks[3]=new Array(7),weeks[4]=new Array(7),weeks[5]=new Array(7),weeks[6]=new Array(7),weeks[7]=new Array(7),weeks[8]=new Array(7),weeks[9]=new Array(7),weeks[0][0]=e==curMonth&&t==curYear&&a?"<td colspan=7 style='text-align:center;background:yellow'>"+s+" ("+(r+1)+"),&nbsp;&nbsp;"+n+"</td>":"<td colspan=7 style='text-align:center;color:black'>"+s+" ("+(r+1)+"),&nbsp;&nbsp;"+n+"</td>",d=1;for(var g=0;g<weekDays.length;g++)weeks[d][g]=td_Daysheading+weekDays[g]+"</td>";d=2;for(var w=y;w<=o+i;w++){var u=new Date(n,r,w),D=u.toLocaleDateString();0==u.getDay()&&d++,u.getMonth()!=r?weeks[d][u.getDay()]=td_notCurrent+u.getDate()+"</td>":(1==a&&curDay==u.getDate()&&curMonth==u.getMonth()&&curYear==u.getFullYear()?weeks[d][u.getDay()]=td_Today+u.getDate()+"</td>":weeks[d][u.getDay()]=td_Current+u.getDate()+"</td>",Holidays.hasOwnProperty(D)&&(td_Holidays=td_Holidays.replace("title","title='"+Holidays[D]+"'"),weeks[d][u.getDay()]=td_Holidays+u.getDate()+"</td>",HolidayStr=HolidayStr+"("+D+"&nbsp;"+Holidays[D]+")&nbsp;&nbsp;",HolidaysCounter++),0<u.getDay()&&u.getDay()<6&&TotalWorkingDays++)}for(var k=0;k<weeks.length-1;k++){c+="<tr>";for(g=0;g<weeks[k].length;g++)null!=weeks[k][g]&&(c+=weeks[k][g]);c+="</tr>"}return c="<table border=0 style='border:0px solid silver;display:inline;'><tr><td></td></tr>"+c+"</table>"}function load(){var e=document.getElementById("chkShowToday").checked;document.getElementById("txtAddHolidays").innerText=x;for(var t=0;t<12;t++)document.getElementById("scrCalendar").innerHTML=document.getElementById("scrCalendar").innerHTML+"&nbsp;"+CreateCalendar(t,curYear,e);document.getElementById("scrCalendar").innerHTML=document.getElementById("scrCalendar").innerHTML+"<BR>Total working days : "+(TotalWorkingDays-HolidaysCounter),document.getElementById("scrCalendar").innerHTML=document.getElementById("scrCalendar").innerHTML+"<br><br><br><div style='text-align:center;font-size:12px;font-weight:normal;font-family:Courier New'>"+HolidayStr+"</div>"}alert("To add holidays click on calendar\rthen move mouse over to see holidays marked in red\r\r\rThe Application is pure HTML5 and Javascript. No jquery or any calendar control by third party");
+
+
+</script>
+
+<html>
+<meta charset="UTF-8">
+<body onload="load()" style="margin:0px" >
+
+<div id="divAdd" style="border:1px solid black;display:none; position:absolute;background:white;box-shadow:10px 10px 10px gray">
+	<label">Add Holidays</label><br>
+	<textarea style='height:200px;width:500px' id="txtAddHolidays"></textarea><br>
+	<input type="checkbox" checked='true' id="chkShowToday">Unckeck this if you do not want to show current month and day while printing<br>
+	<button id='btnAddHolidays' onclick="addHolidays()">Add</button>
+</div>
+
+
+<div id="scrCalendar" onclick="showHide('divAdd','block')" style="text-align:center;font-family:Courier New;font-weight:bold;font-size:16px;display:block">
+
+</div>
+</body>
+</html>
