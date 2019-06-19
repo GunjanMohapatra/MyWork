@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Invoice - Timesheet application (Author: Gunjan Mohapatra)</title>
+<meta charset="utf-8">
+
+<script language='javascript' src='TimeSheetInvoice.js'></script>
+
+<link href='TimeSheetInvoice.css' rel='stylesheet' type='text/css' >
+</head>
+<body onload="AddEvents()">
+<div id="scrAnnuallyContainer"><button onclick="document.getElementById('scrAnnuallyContainer').style.display='none'">X</button><textarea id="scrAnnually" wrap="off" style="width:99%;height:200px;overflow:auto;background:white;resize:none"></textarea></div>
+
+<div id="scrControls" style="box-shadow: 2px 2px 10px #888888;">
+<table border="0" cellspacing="0" style="border-collapse:collapse">
+<tr>
+	<td>
+		<select name="" id="selMonth" class="">
+				<option value="1">January</option>
+				<option value="2">February</option>
+				<option value="3">March</option>
+				<option value="4">April</option>
+				<option value="5">May</option>
+				<option value="6">June</option>
+				<option value="7">July</option>
+				<option value="8">August</option>
+				<option value="9">Septemper</option>
+				<option value="10">October</option>
+				<option value="11">November</option>
+				<option value="12">December</option>
+		</select>
+	</td>
+	<td>
+		Year: <input name="" id="scrYear" class="" type="text">
+	</td>
+	<td>
+		Hours: <input name="" id="scrHoursPerDay" class="" type="text" >
+	</td>
+	<td>
+		Rate: <input name="" id="scrRate" class="" type="text" onblur="TimeSheetBlur(null)">
+						
+				
+	</td>
+	<td>
+		Bill To: <select id="scrBillTo" onchange="getBillTo()"></select>
+		
+	</td>
+	<td>
+		HST: <input name="" id="scrHST" class="" type="text" onblur="TimeSheetBlur(null)">
+	</td>
+</tr>
+<tr>	<td>
+		<button name="" id="btnCreate" class="" onclick="CreateCalendar()">Create</button>
+	</td>
+	<td>
+		<input type="checkbox" name="" id="scrCalendarIndicator" class="" onclick="ShowHideCalendar()" checked>Calendar
+		<br><input id="scrTimeSheetMode" type="checkbox" onclick="TimesheetMode()">Timesheet mode
+	</td>
+	
+	<td>
+		<button name="" id="btnSaveData" class="" onclick="SaveData()">Save Data</button>
+	</td>
+	<td>
+		<input type="text" id="scrMonthsRange" value= "1-12">
+		<button name="" id="btnMonthRangeCalulation" class="" onclick="MonthRangeCalulation()">Calculate invoice (month range)</button>
+	</td>
+	<td>
+		<input type="file" id="btnOpen" onchange="ReadFile()" value="Load Data" style="width:100%" multiple>
+		<select id="scrLoadedMonths" style="display:none" onchange="LoadMonthChange()"></select>
+		
+	</td>
+	<td>
+		<button name="" id="btnLoadedMonthRangeCalulation" class="" onclick="LoadedMonthRangeCalulation()">Calculate saved invoices</button>
+	</td>
+</tr>
+</table>
+
+</div>
+<br>
+<br>
+<label id="scrCompanyDetails"></label>
+<div id="scrCompanyAddress" style="border-top:1px solid silver;width:100%;text-align:right"></div>
+<br>
+<br>
+<label id="scrMessage" onclick="ShowHideControls()"></label>
+<br>
+<br>
+<table id="scrTimesheetTable" border="1px" width="100%">
+	<thead>
+		<tr>
+			<th>Weekend</th>
+			<th>Project</th>
+			<th style="color:red">Su</th>
+			<th>Mo</th>
+			<th>Tu</th>
+			<th>We</th>
+			<th>Th</th>
+			<th>Fr</th>
+			<th style="color:red">Sa</th>
+			<th style="text-align:right">Hours</th>
+			<th style="text-align:right">
+				<input id = "scrAllCheckBoxes" type="checkbox" onchange="SelectAllCheckBoxes()" style="width:2%""></input>				
+				<button name="" id="btnAddTimeSheetRow" class="" onclick="AddBlankTimeSheetRow()">Add Timesheet row</button>
+				<button name="" id="btnExtraRow" class="" onclick="AddAdditionalExpenses()">Additional Expense</button>
+				<button name="" id="btnHide" class="" onclick="ShowHideRows()">Hide</button>
+				<button name="" id="btnDelete" class="" onclick="ConfirmDelete()">Delete</button>
+			</th>
+			
+
+
+		</tr>
+	</thead>
+	<tfoot style="visibility:hidden;">
+		<tr>
+			<td></td>
+		</tr>
+	</tfoot>
+	<tbody>
+	</tbody>
+	
+	<tfoot>
+		<tr>
+			<td colspan=10 style="text-align:right"></td>
+		</tr>
+	</tfoot>
+
+	<thead style="display:none">
+		<tr>
+			<th colspan="10" style="text-align:center">Additional Expense</th>
+		</tr>
+		<tr>
+			<th colspan="9" style="text-align:left">Description</th>
+			<th style="text-align:right">Amount</th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+	
+	<tfoot style="display:none;text-align:right">
+		<tr>
+			<td colspan="10" style="text-align:right">Foot 2</td>
+		</tr>
+	</tfoot>
+
+	<tfoot style="text-align:left;font-size:15px;background:white">
+		<tr>
+			<td colspan="11" style="text-align:left;font-size:12px;background:white"></td>
+		</tr>
+	</tfoot>
+</table>
+<textarea id="debug" style="display:none;Width:100%;height:450px"></textarea>
+</body>
+</html>
