@@ -1,828 +1,1 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>HTML Assistant. Author: Mr. Gunjan Mohapatra</title>
-<meta charset="utf-8">
-
-<script language='javascript'>
-window.onerror = CatchError
-
-function CatchError(paraMessage,paraLocation,paraLine, paraCol)
-{
-	alert(paraMessage + '[error on line number: '  + (paraLine-1) + ']') 
-	return true
-}
-</script>
-
-<script language='javascript'>
-var glb_clientHeight,glb_clientWidth,glb_focusElement,glb_frame,ss="<span class='tagColor'>",se="</span>",ts="<span class='tagSE'>",prop="<span class='tagProp'>",att="<span class='tagAtt'>",glb_caretPos=0,glb_editorMouse=!1,glb_acc_prev="accChild1",glb_selectedEditor="scrEditor",glb_WhichEditActive=null,glb_WhichPrevEditActive=null,glb_HoldCode="";function init(){glb_clientHeight=window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight,glb_clientWidth=window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth,document.getElementById(glb_selectedEditor).style.height=glb_clientHeight-109+"px",document.getElementById("divShow").style.height=glb_clientHeight-109+"px",document.getElementById("divAccord").style.height=glb_clientHeight-109+"px",document.getElementById("accChild1").style.height=glb_clientHeight-200+"px",document.getElementById("accChild2").style.height=glb_clientHeight-200+"px",document.getElementById("accChild3").style.height=glb_clientHeight-200+"px",document.getElementById("lblLineNos").style.top=glb_clientHeight-60+"px",document.getElementById(glb_selectedEditor).focus(),glb_focusElement=document.getElementById("btn_preview"),(glb_frame=document.createElement("iframe")).className="frameHide",glb_frame.style.height=glb_clientHeight-109+"px",document.getElementById("EditorColumn").appendChild(glb_frame),Show(null,"scrEditor",""),Show(null,"scrScript","false"),Show(null,"scrCSS","false"),document.getElementById("QJQCSelectors").innerHTML=document.getElementById("divJQSelectors").value,document.getElementById("QJQCEffects").innerHTML=document.getElementById("divJQEffects").value,document.getElementById("QJQCEvents").innerHTML=document.getElementById("divJQEvents").value,document.getElementById("QJQCTraverse").innerHTML=document.getElementById("divJQTraverse").value,document.getElementById("QJQCHTML").innerHTML=document.getElementById("divJQHTML").value,document.getElementById("QJQCAjax").innerHTML=document.getElementById("divJQAjax").value,document.oncontextmenu=function(e){e.preventDefault()}}function HideRunFrame(){glb_frame.className="frameHide"}function EditorKeys(e,t,n){if(9==e.keyCode&&SetTab(e),112==e.keyCode)return e.preventDefault(),void CreateTag(e,l);var l=document.getElementById(t),o=l.value,c=(l.value.substring(l.selectionStart,l.selectionEnd),l.selectionStart),i=l.selectionEnd,s=o.substring(0,c),r=(o.substring(i,o.length),"&nbsp;".repeat(8)),d=s.lastIndexOf("\n"),a=o.substring(s.length,d);0<a.trim().length&&a.indexOf("\t")<0&&" ".repeat(a.length);var u=(o=(o=(o=o.replace(/&/g,"&amp;")).replace(/\t/g,r)).replace(/ /g,"&nbsp;")).lastIndexOf("<");o.lastIndexOf(">");0<=u&&(o=formatStr(o)),""==(o=o.replace(/[\n]/g,"</br>")).trim()?document.getElementById(n).innerHTML="<image src='images/GMASEFLogo.png'><p>GunjanMohapatra ASEF inc.</p><p><i>A Software Engineering Forethought</i></p><p>Start typing HTML here or select controls from toolbox on right side</p>":document.getElementById(n).innerHTML=o,RowsCols(e)}function ScriptKeys(e,t,n){9==event.keyCode&&SetTab(event),112==event.keyCode&&putFunction("scrScript",null),RowsCols(event)}function CSSKeys(e,t,n){9==event.keyCode&&SetTab(event),RowsCols(event)}function SetTab(e){l_editor=e.target;var t=l_editor.value,n=l_editor.value.substring(l_editor.selectionStart,l_editor.selectionEnd),l=l_editor.selectionStart,o=l_editor.selectionEnd,c=t.substring(0,l),i=t.substring(o,t.length);e.preventDefault(),t=c+"\t"+i,0<=n.indexOf("\n")&&(t=c+"\t"+n.replace(/\n/g,"\n\t")+i),l_editor.value=t,glb_caretPos=l+1,l_editor.selectionEnd=glb_caretPos,l_editor.focus()}function RowsCols(e){document.getElementById("lblLineNos").innerText="";var t=0,n=e.target,l=(n.value,n.selectionStart),o=n.value.substring(0,l),c=o.lastIndexOf("\n",l),i=o.match(/\n/g);t=null!=i?i.length+1:1,document.getElementById("lblLineNos").innerText="Row: "+t+" Column: "+(l-c)}function formatStr(e){for(var t="",n="",l=-1,o=(e.lastIndexOf(">"),e.lastIndexOf("<"),e.lastIndexOf("="),0);o<e.length;o++)"<"==(t=e[o])?n+=ts+t+se+ss:">"==t?n+=se+ts+t+se:"/"==t?n+=se+ts+t+se+ss:"="==t?(l=o,n=se+goReverse(n),n+=se+t):n+='"'==t?2<o-l?se+t:se+t+att:"'"==t?2<o-l?se+t:se+t+att:t;return n}function goReverse(e){for(var t=-1,n=e.length;0<=n;n--){if(";"==e[n]){e.substring(n-5,n+1),t=n-5;break}if(" "==e[n]){t=n;break}}return e=e.substring(0,t)+se+prop+e.substring(t,e.length)}function txtScroll(e,t){document.getElementById(t).scrollTop=document.getElementById(e).scrollTop,document.getElementById(t).scrollLeft=document.getElementById(e).scrollLeft}function CreateTag(e){var t,n,l,o=0,c="",i=[];e.preventDefault();var s=e.target,r=s.value.substring(0,s.selectionStart),d=s.value.substring(s.selectionEnd,s.value.length);t=r.lastIndexOf(">"),n=r.lastIndexOf(" "),l=r.lastIndexOf("\n"),-1!=t&&i.push(t),-1!=n&&i.push(n),-1!=l&&i.push(l),0<i.length&&(i.reverse(),o=i[i.length-1]+1),c=s.value.substring(o,s.selectionEnd),r=s.value.substring(0,s.selectionStart-c.length),c=0<=c.lastIndexOf("\n")||0<=c.lastIndexOf(" ")?"\n<"+c.trim()+">\n\n</"+c.trim()+">":"<"+c+">\n\n</"+c+">\n";var a=s.selectionStart+c.length+1,u=r+c+d;s.value=u,s.focus(),glb_focusElement.focus(),s.focus(),s.selectionStart=a-c.length+2,s.selectionEnd=s.selectionStart}function putHTML(e,t){var n=e.target,l=document.getElementById(t);l.value="<!DOCTYPE html>\n<html>\r<head>\n<title></title>\n<meta>\n</head>\n<body>\n\n</body>\n</html>",l.selectionStart=l.value.indexOf("</body>")-1,l.selectionEnd=l.selectionStart,l.focus(),n.focus(),l.focus()}function CreateForm(e,t){e.preventDefault();var n=e.target,l=n.getAttribute("onclick");n.removeAttribute("onclick");var o="",c=document.getElementById(t);o=0<=c.value.indexOf("body")?"\t<form name='' id='form_id' action='' target=''>\n\n\t</form>\n":"<form name='' id='form_id' action='' target=''>\n\n</form>\n";var i=c.value.substring(0,c.selectionStart),s=c.value.substring(c.selectionEnd,c.value.length),r=c.selectionStart,d=i+o+s;c.value=d,c.focus(),n.focus(),c.focus(),c.selectionStart=r+o.length,c.selectionEnd=c.selectionStart,n.setAttribute("onclick",l)}function CreateLabel(e,t){e.preventDefault();var n=e.target,l=n.getAttribute("onclick");n.removeAttribute("onclick");var o="",c=document.getElementById(t);o=0<=c.value.indexOf("body")?"\t<label name='lbl_name' id='lbl_id'>Label</label></br>\n":"<label name='lbl_name' id='lib_id'>Label</label></br>\n";var i=c.value.substring(0,c.selectionStart),s=c.value.substring(c.selectionEnd,c.value.length),r=c.selectionStart,d=i+o+s;c.value=d,c.focus(),n.focus(),c.focus(),c.selectionStart=r+o.length,c.selectionEnd=c.selectionStart,n.setAttribute("onclick",l)}function CreateFromControl(e,t,n){var l,o="";t=glb_selectedEditor,null!==n&&n.preventDefault();var c=(l=""!=e?document.getElementById(e):n.target).getAttribute("onclick");l.removeAttribute("onclick");var i=document.getElementById(t);if(0<=i.value.indexOf("body"))o=l.outerHTML.replace(/\t/g,"")+"</br>\n";else o=l.outerHTML.replace(/\t/g,"")+"</br>\n";var s=i.selectionStart,r=i.value.substr(0,i.selectionStart),d=i.value.substr(i.selectionEnd);i.value=r+o+d,i.selectionStart=s+o.length,i.selectionEnd=i.selectionStart,i.focus(),l.setAttribute("onclick",c),i.focus(),document.getElementById("btn_editorHtml").focus(),i.focus()}function AddJSElements(e,t){var n;document.getElementById("btn_editorScript").click(),null!==t&&t.preventDefault();var l=(n=t.target).getAttribute("onclick");n.removeAttribute("onclick");var o=document.getElementById(e),c=n.innerText.replace(/\t/g,"")+"\n",i=o.selectionStart,s=o.value.substr(0,o.selectionStart),r=o.value.substr(o.selectionEnd);o.value=s+c+r,o.selectionStart=i+c.length,o.selectionEnd=o.selectionStart,o.focus(),n.setAttribute("onclick",l),o.focus(),document.getElementById("btn_editorHtml").focus(),o.focus()}function disableKeys(e){9!=e.keyCode&&112!=e.keyCode||e.preventDefault()}function ShowHideAcc(e){document.getElementById(e).className="accChildShow",glb_acc_prev!=e&&""!=glb_acc_prev&&(document.getElementById(glb_acc_prev).className="accChildHide"),glb_acc_prev=e}function HoldCode(){event.target;var e=document.getElementById(glb_selectedEditor),t=document.getElementById("addScript").value.replace("<script>","<script>\n"+document.getElementById("scrScript").value),n=document.getElementById("addCSS").value.replace("<style>","<style>\n"+document.getElementById("scrCSS").value),l=document.getElementById("txtCDN").value,o=document.getElementById("txtCatchError").value,c=e.value.replace("<scrip",o+"\r<scrip");c=0<=c.lastIndexOf("head")?c.replace("<head>","<head>\n"+l+t+n):c.replace("<body>","<head>\n"+l+t+"</head>\n<body>"),document.getElementById("CompleteCodeHolder").value=c,Show(null,"scrEditor","false"),Show(null,"divShow","false"),Show(null,"scrScript","false"),Show(null,"scrCSS","false"),document.getElementById("CompleteCodeHolder").style.display="block"}function RunCode(e,t){var n=e.target,l=document.getElementById(glb_selectedEditor),o=document.getElementById("addScript").value.replace("<script>","<script>\n"+document.getElementById("scrScript").value),c=document.getElementById("addCSS").value.replace("<style>","<style>\n"+document.getElementById("scrCSS").value),i=document.getElementById("txtCDN").value,s=0,r=-1,d="",a="";if("Run"==n.innerHTML){var u=document.getElementById("txtCatchError").value,g=l.value.replace("<scrip",u+"\r<scrip");for(g=0<=g.lastIndexOf("head")?g.replace("<head>","<head>\n"+i+o+c):g.replace("<body>","<head>\n"+i+o+c+"</head>\n<body>");0<=s;)0<=(s=g.indexOf("#"))&&(r=g.indexOf(").",s),d=g.substring(0,s-1),a=g.substring(r,g.length),g=d+'document.getElementById("'+g.substring(s+1,r).replace("#","")+")"+a);n.innerText="Code",document.getElementById(t).innerHTML=l.value;l=document.getElementById(glb_selectedEditor);glb_frame.className="frameShow",glb_frame.src="data:text/html;charset=utf-8,"+encodeURI(g),Show(null,"scrEditor","false"),Show(null,"scrScript","false"),Show(null,"scrCSS","false"),Show(null,"divShow","false"),document.getElementById("btn_editorHtml").style.display="none",document.getElementById("btn_editorScript").style.display="none",document.getElementById("btn_editorCss").style.display="none"}else n.innerText="Run",glb_frame.className="frameHide",Show(null,"scrEditor",""),Show(null,"divShow",""),Show(null,"scrScript","false"),Show(null,"scrCSS","false"),document.getElementById("btn_editorHtml").style.display="inline",document.getElementById("btn_editorScript").style.display="inline",document.getElementById("btn_editorCss").style.display="inline",l.focus(),n.focus(),l.focus()}function Show(e,t,n){null!=e&&(glb_WhichEditActive=e.target.id,document.getElementById(glb_WhichEditActive).style.background="lightgreen"),glb_WhichPrevEditActive!=glb_WhichEditActive&&null!=glb_WhichPrevEditActive&&(document.getElementById(glb_WhichPrevEditActive).style.background="silver"),n="false"==n?"none":"block",document.getElementById(t).style.display=n,document.getElementById(t).style.border="",document.getElementById(t).focus(),glb_WhichPrevEditActive=glb_WhichEditActive}function putJQData(e,t){var n=document.getElementById(t.target.id),l='$("'+n.value+'")';if(""!=l.trim()){var o=document.getElementById(e),c=o.selectionStart,i=o.value.substring(0,o.selectionStart),s=o.value.substring(o.selectionEnd);o.value=i+l+s,o.selectionStart=c+l.length,o.selectionEnd=o.selectionStart,n.value="",o.focus(),o.focus(),document.getElementById("btn_editorHtml").focus(),o.focus()}}function putJQEffects(e,t){var n=document.getElementById(t.target.id),l="."+n.value;if(""!=l.trim()){var o=document.getElementById(e),c=o.selectionStart,i=o.value.substring(0,o.selectionStart),s=o.value.substring(o.selectionEnd);o.value=i+l+s,o.selectionStart=c+l.length,o.selectionEnd=o.selectionStart,n.value="",o.focus(),o.focus(),document.getElementById("btn_editorHtml").focus(),o.focus()}}function putJQEvents(e,t){var n=document.getElementById(t.target.id),l="."+n.value;if(""!=l.trim()){var o=document.getElementById(e),c=o.selectionStart,i=o.value.substring(0,o.selectionStart),s=o.value.substr(o.selectionEnd);o.value=i+l+s,o.selectionStart=c+l.length,o.selectionEnd=o.selectionStart,n.value="",o.focus(),o.focus(),document.getElementById("btn_editorHtml").focus(),o.focus()}}function putJQTraverse(e,t){var n=document.getElementById(t.target.id),l="."+n.value;if(""!=l.trim()){var o=document.getElementById(e),c=o.selectionStart,i=o.value.substring(0,o.selectionStart),s=o.value.substr(o.selectionEnd);o.value=i+l+s,o.selectionStart=c+l.length,o.selectionEnd=o.selectionStart,n.value="",o.focus(),o.focus(),document.getElementById("btn_editorHtml").focus(),o.focus()}}function putJQHTML(e,t){var n=document.getElementById(t.target.id),l="."+n.value;if(""!=l.trim()){var o=document.getElementById(e),c=o.selectionStart,i=o.value.substring(0,o.selectionStart),s=o.value.substr(o.selectionEnd);o.value=i+l+s,o.selectionStart=c+l.length,o.selectionEnd=o.selectionStart,n.value="",o.focus(),o.focus(),document.getElementById("btn_editorHtml").focus(),o.focus()}}function putJQAjax(e,t){var n=document.getElementById(t.target.id),l=n.value;if(""!=l.trim()){var o=document.getElementById(e),c=o.selectionStart,i=o.value.substring(0,o.selectionStart),s=o.value.substr(o.selectionEnd);o.value=i+l+s,o.selectionStart=c+l.length,o.selectionEnd=o.selectionStart,n.value="",o.focus(),o.focus(),document.getElementById("btn_editorHtml").focus(),o.focus()}}function putFunction(e,t){var n="function(){\n\n}",l=document.getElementById(e),o=l.selectionStart,c=l.value.substr(0,l.selectionStart),i=l.value.substring(l.selectionEnd),s=l.value.substring(o,l.selectionEnd);o!=l.selectionEnd?(n="\n\nfunction "+s+"()\n{\n\n}",l.value+=n,l.selectionStart=l.value.length-2):(l.value=c+n+i,l.selectionStart=o+(n.length-2)),l.selectionEnd=l.selectionStart,l.focus(),l.focus(),document.getElementById("btn_editorHtml").focus(),l.focus()}function putJQDollar(e,t){var n=document.getElementById(e),l=n.selectionStart,o=n.value.substr(0,n.selectionStart),c=n.value.substring(n.selectionEnd);n.value=o+'$("")'+c,n.selectionStart=l+('$("")'.length-2),n.selectionEnd=n.selectionStart,n.focus(),n.focus(),document.getElementById("btn_editorHtml").focus(),n.focus()}</script><style>
-*:focus
- {
-	outline: none;
-}.txtEditor
-{
-	width:90%;
-	height:820px;
-	border-left:1pt solid silver;
-	border-top:1pt solid silver;
-	background:transparent;
-	color:transparent;
-	position:absolute;
-	top:0px;
-	left:0px;
-	caret-color:black;
-	overflow:auto;
-	font-family:Courier New;
-	font-size:12pt;
-	font-weight:bold;
-	resize:none;	
-}
-
-.txtScriptShow
-{
-	width:90%;
-	height:820px;
-	border-left:1pt solid silver;
-	border-top:1pt solid silver;
-	background:WhiteSmoke;
-	color:Black;
-	position:absolute;
-	top:0px;
-	left:0px;
-	caret-color:black;
-	overflow:auto;
-	font-family:Courier New;
-	font-size:12pt;
-	font-weight:bold;
-	resize:none;
-	
-	
-}
-.txtCSSShow
-{
-	width:90%;
-	height:820px;
-	border-left:1pt solid silver;
-	border-top:1pt solid silver;
-	background:ghostwhite;
-	color:Black;
-	position:absolute;
-	top:0px;
-	left:0px;
-	caret-color:black;
-	overflow:auto;
-	font-family:Courier New;
-	font-size:12pt;
-	font-weight:bold;
-	resize:none;
-	
-	
-}
-
-.divShowEditor
-{
-	width:90%;
-	height:820px;
-	border:0pt solid white;
-	background:transparent;
-	position:absolute;
-	top:3px;
-	left:3px;
-	overflow:hidden;
-	font-family:Courier New;
-	font-size:12pt;
-	font-weight:bold;
-	white-space: nowrap;
-	box-shadow:12px 12px 12px silver;
-	
-}
-
-.frameShow
-{
-	width:90%;
-	height:820px;
-	border-left:1pt solid silver;
-	border-top:1pt solid silver;
-	position:absolute;
-	top:0px;
-	left:0px;
-	overflow:auto;
-	resize:none;
-	display:block;
-	z-index:1000;
-}
-
-.frameHide
-{
-	width:90%;
-	height:820px;
-	border-left:1pt solid silver;
-	border-top:1pt solid silver;
-	position:absolute;
-	top:0px;
-	left:0px;
-	overflow:auto;
-	resize:none;
-	display:none;
-	
-}
-
-.tagColor
-{
-	color:brown;
-}
-
-.tagSE
-{
-	color:blue;
-}
-
-.tagProp
-{
-	color:green;
-}
-
-.tagAtt
-{
-	color:purple;
-}
-.tagBlack
-{
-	color:black;
-}
-
-
-.accHeader
-{
-	border-radius:10px;
-	border:1px solid gray;
-	background:whitesmoke;
-	color:black;
-	text-align:center;
-	width:80%;
-	margin:2px;
-	padding:1px;	
-	box-shadow:2px 2px 2px silver;
-	font-size:14px;
-
-}
-
-.accChildHide
-{
-	border:1px solid silver;
-	display:none;
-	height:0px;
-	margin:2px;
-	padding:1px;
-	border-radius:20px;
-	width:68%;
-	position:relative;
-	height:85%;	
-	
-}
-.accChildShow
-{
-	border:1px solid silver;
-	display:block;
-	height:730px;
-	margin:2px;
-	padding:1px;
-	border-radius:20px;
-	font-size:14px;
-	width:80%;
-	position:relative;
-	height:85%;
-	box-shadow:2px 2px 2px silver;
-		
-}
-
-body
-{
-	font-family:arial;
-	
-}
-
-table
-{
-	width:100%;
-	font-family:arial;
-	font-size:10pt;
-	color:black;
-	position:relative;
-	white-space:wrap;
-	border-collapse:collapse;
-	height:auto;
-	table-layout:auto;
-	
-}
-td
-{
-	
-	font-size:10pt;
-	vertical-align:top;
-	padding:2px;
-	
-}
-input
-{
-	width:90%;
-	font-size:10pt;
-	
-}
-col
-{
-	width:50%;	
-}
-
-textArea
-{
-
-	width:90%;
-	font-size:8pt;
-}
-div
-{
-	
-}	
-button
-{
-	width:30%;
-	font-size:8pt;
-}
-
-.buttonHelp
-{
-	width:30%;
-	font-size:15pt;
-	overflow-wrap:break-word;
-}
-
-.txtCDN
-{
-	overflow:auto;
-	width:90%;
-	height:20%;
-	resize:none;
-	margin:5px;
-	white-space: nowrap;
-	font-size:12pt;
-}</style></head>
-<body onkeydown="disableKeys(event)" onload="init()">
-	
-
-	<div id="EditorColumn" style="float:right;width:80%;position:absolute">
-		
-		<div id="divShow" wrap="off" class="divShowEditor"><image src="images/GMASEFLogo.png"></div>
-		<textarea id="scrEditor" wrap="off" class="txtEditor"  onblur="EditorKeys(event,'scrEditor','divShow')" onkeyup="EditorKeys(event,'scrEditor','divShow')" onscroll="txtScroll('scrEditor','divShow')" onclick="EditorKeys(event,'scrEditor','divShow')"></textarea>
-		<textarea placeholder="Write javascript or jquery here. You can paste the latest jquery CND on the right under Quick jQuery/Javascript Code section" id="scrScript" wrap="off" class="txtScriptShow" onblur="ScriptKeys(event,'scrScript','')" onkeyup="ScriptKeys(event,'scrScript','')" onclick="ScriptKeys(event,'scrScript','')"></textarea>
-		<textarea placeholder="Write CCS here like button{background:red}" id="scrCSS" wrap="off" class="txtCSSShow" onblur="CSSKeys(event,'scrCSS','')" onkeyup="CSSKeys(event,'scrCSS','')" onclick="CSSKeys(event,'scrCSS','')"></textarea>	
-	</div>
-
-	
-	
-	<div id="divAccord" style="position:relative;float:right;width:22%;border-left:0px solid gray;font-family:arial;height:auto;display:block;over-flow:hidden">
-		
-		<div class = "accHeader" onclick="ShowHideAcc('accChild1');btn_editorHtml.click()">
-			Form Controls
-		</div>
-		<div class="accChildShow" id="accChild1">
-				<br>
-				<br>
-				<table border="0">
-					<tr><td>HTML</td><td><button onclick="putHTML(event,'scrEditor')">HTML</button></td></tr>
-					<tr><td>Form:</td><td><button  class=""  onclick="CreateForm(event, 'scrEditor')">Form</button></td></tr>
-					<tr><td>Label:</td><td><button name="" id="label_id" class="" onclick="CreateLabel(event, 'scrEditor')">Label</button></td></tr>
-					<tr><td>Button:</td><td><button name="" id="btn_id" class="" onclick="CreateFromControl('btn_id', 'scrEditor',event)">Button</button></td></tr>	
-					<tr><td>Text:</td><td><input type="text" name="" id="input_text_id" class="" onclick="CreateFromControl('input_text_id', 'scrEditor',event)"></td></tr>
-
-					<tr><td>Radio:</td><td><input type="radio" name="" id="radio_id" class="" onclick="CreateFromControl('radio_id', 'scrEditor',event)"></td></tr>
-
-					<tr><td>Checkbox:</td><td><input type="checkbox" name="" id="chkbox_id" class="" onclick="CreateFromControl('chkbox_id', 'scrEditor',event)"></td></tr>
-
-					<tr><td>File:</td><td><input type="file" name="" id="file_id" onclick="CreateFromControl('file_id', 'scrEditor',event)"></td></tr>
-					<tr><td>Submit:</td><td><input type="submit" value="Submit" name="" id="submit_id" onclick="CreateFromControl('submit_id', 'scrEditor',event)"></td></tr>
-
-					<tr><td>Color:</td><td><input type="color" name="" id="color_id" class="" onclick="CreateFromControl('color_id', 'scrEditor',event)"></td></tr>
-
-					<tr><td>Password:</td><td><input type="password" name="" id="password_id" class="" onclick="CreateFromControl('password_id', 'scrEditor',event)"></td></tr>
-
-					<tr><td>Number:</td><td><input type="number" name="" id="number_id" min="1" max="9" class="" onclick="CreateFromControl('number_id', 'scrEditor',event)"></td></tr>
-
-					<tr><td>Number:</td><td><input type="number"  name="" id="number_id2" min="0" max="100" step="10" value="30" class="" onclick="CreateFromControl('number_id2', 'scrEditor',event)"></td></tr>
-
-					
-					<tr><td>Email:</td><td><input type="email" name="" id="email_id" class="" onclick="CreateFromControl('email_id', 'scrEditor',event)"></td></tr>
-
-					<tr><td>Search:</td><td><input type="search" name="" id="search_id" class="" onclick="CreateFromControl('search_id', 'scrEditor',event)"></td></tr>
-
-					<tr><td>Telephone:</td><td><input type="tel" name="" id="telephone_id" class="" value="1234567890" onclick="CreateFromControl('telephone_id', 'scrEditor',event)"></td></tr>
-
-					<tr><td>URL:</td><td><input type="url" name="" id="url_id" class="" value="URL" onclick="CreateFromControl('url_id', 'scrEditor',event)"></td></tr>
-
-					<tr><td>Select:</td><td><select name="" id="select_id" class="" onclick="CreateFromControl('select_id', 'scrEditor',event)">
-						<option value="">option1</option>
-					</select></td></tr>
-
-					<tr><td>Textarea:</td><td><textarea name="" id="textarea_id" class="" onclick="CreateFromControl('textarea_id', 'scrEditor',event)"></textarea></td></tr>
-
-			</table>
-	
-		</div>
-		<div class = "accHeader" onclick="ShowHideAcc('accChild2');btn_editorHtml.click()">
-			Date Time
-		</div>
-		<div class="accChildHide" id="accChild2">
-				<br>
-				<br>
-				<div style="margin-left:5px">
-					<a>Date:</a><br><hr><a><input type="date" name="" id="date_id" max="2015-12-31" min="2015-01-01" class="" onclick="CreateFromControl('date_id', 'scrEditor',event)"></a><br><hr>
-
-					<a>Range:</a><br><hr><a><input type="range" name="" id="range_id" min="0" max="0" class="" onclick="CreateFromControl('range_id', 'scrEditor',event)"></a><br><hr>
-
-					<a>Month:</a><br><hr><a><input type="month" name="" id="month_id" class="" onclick="CreateFromControl('month_id', 'scrEditor',event)"></a><br><hr>
-
-					<a>Week:</a><br><hr><a><input type="week" name="" id="week_id" class="" onclick="CreateFromControl('week_id', 'scrEditor',event)"></a><br><hr>
-				
-
-					<a>Time:</a><br><hr><a><input type="time" name="" id="time_id" class="" onclick="CreateFromControl('time_id', 'scrEditor',event)"></a><br><hr>
-
-					<a>Datetime:</a><br><hr><a><input type="datetime" name="" id="datetime_id" class="" onclick="CreateFromControl('datetime_id', 'scrEditor',event)"></a><br><hr>
-
-					<a>Datetime-local:</a><br><hr><a><input type="datetime-local" name="" id="datetimelocal_id" class="" onclick="CreateFromControl('datetimelocal_id', 'scrEditor',event)"></a><br><hr>	
-				</div>
-		</div>
-
-
-		<div class = "accHeader" onclick="ShowHideAcc('accChild3');btn_editorHtml.click()">
-			DRAW
-		</div>
-		<div class="accChildHide" id="accChild3">
-		
-		<br>
-		<br>
-		<br>	
-		
-                    <table id="draw_table_id" border="1" style="font-size:12px;" onclick="CreateFromControl('draw_table_id', 'scrEditor',null)">
-                        <thead>
-                            <tr>
-                                <th>head 1</th>
-                                <th>head 2</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <td>Foot 1</td>
-                                <td>Foot 2</td>
-                            </tr>
-                        </tfoot>
-                        <tr>
-                            <td>row 1 col 1</td>
-                            <td>row 1 col 2</td>
-                        </tr>
-                        <tr>
-                            <td>row 2 col 1</td>
-                            <td>row 2 col 2</td>
-                        </tr>
-                    </table>
-                    <BR>
-
-		    <svg id="svg_circle_id" width="25"  height="25"  style="border:0px solid black;" onclick="CreateFromControl('svg_circle_id', 'scrEditor',null)">
-                    <circle id="circle_id" cx="12" cy="12" r="10" fill="gray" stroke="black" stroke-width="1px" ></circle>
-                    </svg>
-
-                    <svg id="svg_ellipse_id" width="25"  height="25" style="border:0px solid black;" onclick="CreateFromControl('svg_ellipse_id', 'scrEditor',null)">
-                    <ellipse id="ellipse_id" cx="13" cy="12" rx="7" ry="11" fill="gray" stroke="black" stroke-width="1px"></ellipse>
-                    </svg>
-
-		    <svg id="svg_rect_id" width="25"  height="25" style="border:0px solid black;" onclick="CreateFromControl('svg_rect_id', 'scrEditor',null)">
-		    <rect id="rect_id" x="3" y="3" fill="gray" width="18" height="18" stroke="black" stroke-width="1px"></rect>
-		    </svg>
-
-                    <svg id="svg_round_rect_id" width="25"  height="25" style="border:0px solid black;" onclick="CreateFromControl('svg_round_rect_id', 'scrEditor',null)">
-                    <rect id="round_rect_id" x="3" y="3"  rx="3" ry="3" fill="gray" width="19" height="18" stroke="black" stroke-width="1px"></rect>
-                    </svg>
-
-                    <svg id="svg_line_id" width="25"  height="25" style="border:0px solid black;" onclick="CreateFromControl('svg_line_id', 'scrEditor',null)">
-                    <line id="line_id"  x1="3" y1="10" x2="20" y2="10" stroke="black"></line>
-                    </svg>
-
-                    <svg id="svg_text_id" width="25"  height="25" style="border:0px solid black;" onclick="CreateFromControl('svg_text_id', 'scrEditor',null)">
-                    <text id="text_id" x="1" y="12" fill="gray" transform="rotate(5)" stroke="black" stroke-width="1px">TXT</text>
-                    </svg>
-
-                    <svg id="svg_polygon_id" width="25"  height="25" style="border:0px solid black;" onclick="CreateFromControl('svg_polygon_id', 'scrEditor',null)">
-                    <polygon id="polygon_id" points="15,8,20,20,1,20" fill="gray" stroke="black" stroke-width="1px"></polygon>
-                    </svg>
-                  
-                   
-	
-		</div>
-
-
-		<div class = "accHeader" onclick="ShowHideAcc('accChild4');btn_editorScript.click()">
-			Quick jQuery/Javascript Code
-		</div>
-		<div class="accChildHide" id="accChild4">
-			<br>
-			<textarea id="txtCDN" class="txtCDN"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"/></script>
-			</textarea>
-			<br>
-			
-			<button onclick="putFunction('scrScript',event)">Function</button>
-			<button onclick="putJQDollar('scrScript',event)">$("")</button>
-			<hr>
-			Selectors:<div id="QJQCSelectors" style="margin-left:20px">
-				</div>	
-			<hr>
-			Events:<div id="QJQCEvents" style="margin-left:20px">
-				</div>	
-			
-			<hr>
-			Traverse:<div id="QJQCTraverse" style="margin-left:20px">
-				</div>	
-			<hr>
-			HTML etc:<div id="QJQCHTML" style="margin-left:20px">
-				</div>
-	
-			<hr>
-			Ajax:<div id="QJQCAjax" style="margin-left:20px">
-				</div>
-
-			<hr>
-			Effects:<div id="QJQCEffects" style="margin-left:20px">
-				</div>	
-		</div>
-
-		<div class = "accHeader" onclick="ShowHideAcc('accChild5')">
-			Help
-		</div>
-		
-
-		<div class="accChildHide" id="accChild5">
-				<ul>
-					<li>
-					<p>In HTML editor putting the cursor at the end of the word and pressing F1, creates tag</p>
-					</li>
-					<li>
-					<p>In Script editor F1 creates a function like function(){}, but highlighting a word creates a function of that name. e.g main will create a function main(){}</p>		
-					</li>	
-				</ul>
-			
-		</div>
-
-		<div class = "accHeader" onclick="ShowHideAcc('accChild6')">
-			About
-		</div>
-		
-
-		<div class="accChildHide" id="accChild6">
-			
-			<p><center><h2>HTML Assistant</h2>
-			<br><br><br><br><br><br><br><br>
-			
-			Author:<br>Mr. Gunjan Mohapatra<br><br>
-			Company:<br>Gunjan Mohapatra ASEF Inc.<br><br>
-			Location:<br>Toronto, Ontario, Canada<br><br>
-			<p style="overflow-wrap:break-word">E-mail:<br>ContactGunjanMohapatra@gmail.com</p><br><br>
-			<br><br>
-			<p>This appliation is written in HTML5, Javascript and CSS.</p>
-			</center>
-			</p>
-
-		</div>
-	</div>
-	<div style="float:right;width:4%;border:0px solid silver;font-family:arial;height:auto;margin:1px">
-		<table border=0>
-		<tr>
-			<td>
-				<button id="btn_preview" onclick="RunCode(event,'divShow');Show(event,'CompleteCodeHolder','false')" style="width:100%">Run</button><br>
-			</td>
-		<tr>
-			<td>
-				&nbsp;
-			</td>
-		</tr>
-		</tr>
-		<tr>
-			<td>
-				<button id="btn_editorHtml" onclick="Show(event,'scrEditor','');Show(event,'divShow','');Show(event,'scrScript','false');Show(event,'scrCSS','false');HideRunFrame();Show(event,'CompleteCodeHolder','false')" style="width:100%">Editor</button><br>
-			</td>	
-		</tr>
-		<tr>
-			<td>
-				&nbsp;
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<button id="btn_editorScript" onclick="Show(event,'scrScript','');Show(event,'divShow','');Show(event,'scrEditor','false');Show(event,'scrCSS','false');HideRunFrame();Show(event,'CompleteCodeHolder','false')" style="width:100%">Script</button><br>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				&nbsp;
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<button id="btn_editorCss" onclick="Show(event,'scrCSS','');Show(event,'divShow','');Show(event,'scrEditor','false');Show(event,'scrScript','false');HideRunFrame();Show(event,'CompleteCodeHolder','false')" style="width:100%">CSS</button><br>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<br>
-				<br>
-				<button id="btn_HoldCode" onclick="HoldCode()" style="width:100%">Your code</button><br>
-			</td>
-		</tr>
-		</table>
-			
-	</div>
-
-
-<label id="lblLineNos" style="position:absolute"></label>
-
-<textarea id="CompleteCodeHolder" style="position:relative;width:50%;display:none;height:800px">
-</textarea>
-
-<textarea id="txtCatchError" style="display:none">
-<script>window.onerror = CatchError;function CatchError(paraMessage,paraLocation,paraLine, paraCol){alert(paraMessage + '[error on line number: '  + (paraLine-1) + ']');return paraLine-1;}</script>
-</textArea>
-
-<textarea id="addScript" style="display:none">
-<script>
-	
-</script>
-</textarea>
-
-<textarea id="addCSS" style="display:none">
-<style>
-	
-</style>
-</textarea>
-<textarea id="divJQSelectors" style="display:none">
-<input id="inJQSelectors" list="JQSelectors" onchange="putJQData('scrScript',event)">
-<datalist id="JQSelectors">
-<option value="*">
-<option value="#id">
-<option value=".class">
-<option value=".class,.class">
-<option value="document">
-<option value="element">
-<option value="el1,el2,el3">
-<option value=":first">
-<option value=":last">
-<option value=":even">
-<option value=":odd">
-<option value=":first-child">
-<option value=":first-of-type">
-<option value=":last-child">
-<option value=":last-of-type">
-<option value=":nth-child(n)">
-<option value=":nth-last-child(n)">
-<option value=":nth-of-type(n)">
-<option value=":nth-last-of-type(n)">
-<option value=":only-child">
-<option value=":only-of-type">
-<option value="parent > child">
-<option value="parent descendant">
-<option value="element + next">
-<option value="element ~ siblings">
-<option value=":eq(index)">
-<option value=":gt(no)">
-<option value=":lt(no)">
-<option value=":not(selector)">
-<option value=":header">
-<option value=":animated">
-<option value=":focus">
-<option value=":contains(text)">
-<option value=":has(selector)">
-<option value=":empty">
-<option value=":parent">
-<option value=":hidden">
-<option value=":visible">
-<option value=":root">
-<option value=":lang(language)">
-<option value="[attribute]">
-<option value="[attribute=value]">
-<option value="[attribute!=value]">
-<option value="[attribute$=value]">
-<option value="[attribute|=value]">
-<option value="[attribute^=value]">
-<option value="[attribute~=value]">
-<option value="[attribute*=value]">
-<option value=":input">
-<option value=":text">
-<option value=":password">
-<option value=":radio">
-<option value=":checkbox">
-<option value=":submit">
-<option value=":reset">
-<option value=":button">
-<option value=":image">
-<option value=":file">
-<option value=":enabled">
-<option value=":disabled">
-<option value=":selected">
-<option value=":checked">
-</datalist>
-</textarea>
-
-<textarea id="divJQEffects" style="display:none">
-<input id="inJQEffects" list="JQEffects" onchange="putJQEffects('scrScript',event)">
-<datalist id="JQEffects">
-<option value="animate()">
-<option value="clearQueue()">
-<option value="delay()">
-<option value="dequeue()">
-<option value="fadeIn()">
-<option value="fadeOut()">
-<option value="fadeTo()">
-<option value="fadeToggle()">
-<option value="finish()">
-<option value="hide()">
-<option value="queue()">
-<option value="show()">
-<option value="slideDown()">
-<option value="slideToggle()">
-<option value="slideUp()">
-<option value="stop()">
-<option value="toggle()">
-</datalist>
-</textarea>
-
-<textarea id="divJQEvents" style="display:none">
-<input id="inJQEvents" list="JQEvents" onchange="putJQEvents('scrScript',event)">
-<datalist id="JQEvents">
-<option value="bind()">
-<option value="blur()">
-<option value="change()">
-<option value="click()">
-<option value="dblclick()">
-<option value="delegate()">
-<option value="die()">
-<option value="error()">
-<option value="event.currentTarget">
-<option value="event.data">
-<option value="event.delegateTarget">
-<option value="event.isDefaultPrevented()">
-<option value="event.isImmediatePropagationStopped()">
-<option value="event.isPropagationStopped()">
-<option value="event.namespace">
-<option value="event.pageX">
-<option value="event.pageY">
-<option value="event.preventDefault()">
-<option value="event.relatedTarget">
-<option value="event.result">
-<option value="event.stopImmediatePropagation()">
-<option value="event.stopPropagation()">
-<option value="event.target">
-<option value="event.timeStamp">
-<option value="event.type">
-<option value="event.which">
-<option value="focus()">
-<option value="focusin()">
-<option value="focusout()">
-<option value="hover()">
-<option value="keydown()">
-<option value="keypress()">
-<option value="keyup()">
-<option value="live()">
-<option value="load()">
-<option value="mousedown()">
-<option value="mouseenter()">
-<option value="mouseleave()">
-<option value="mousemove()">
-<option value="mouseout()">
-<option value="mouseover()">
-<option value="mouseup()">
-<option value="off()">
-<option value="on()">
-<option value="one()">
-<option value="$.proxy()">
-<option value="ready()">
-<option value="resize()">
-<option value="scroll()">
-<option value="select()">
-<option value="submit()">
-<option value="toggle()">
-<option value="trigger()">
-<option value="triggerHandler()">
-<option value="unbind()">
-<option value="undelegate()">
-<option value="unload()">
-
-</datalist>
-</textarea>
-
-<textarea id="divJQTraverse" style="display:none">
-<input id="inJQTraverse" list="JQTraverse" onchange="putJQTraverse('scrScript',event)">
-<datalist id="JQTraverse">
-<option value="add()">
-<option value="addBack()">
-<option value="andSelf()">
-<option value="children()">
-<option value="closest()">
-<option value="contents()">
-<option value="each()">
-<option value="end()">
-<option value="eq()">
-<option value="filter()">
-<option value="find()">
-<option value="first()">
-<option value="has()">
-<option value="is()">
-<option value="last()">
-<option value="map()">
-<option value="next()">
-<option value="nextAll()">
-<option value="nextUntil()">
-<option value="not()">
-<option value="offsetParent()">
-<option value="parent()">
-<option value="parents()">
-<option value="parentsUntil()">
-<option value="prev()">
-<option value="prevAll()">
-<option value="prevUntil()">
-<option value="siblings()">
-<option value="slice()">
-</datalist>
-</textarea>
-
-<textarea id="divJQHTML" style="display:none">
-<input id="inJQHTML" list="JQHTML" onchange="putJQHTML('scrScript',event)">
-<datalist id="JQHTML">
-<option value="addClass()">
-<option value="after()">
-<option value="append()">
-<option value="appendTo()">
-<option value="attr()">
-<option value="before()">
-<option value="clone()">
-<option value="css()">
-<option value="detach()">
-<option value="empty()">
-<option value="hasClass()">
-<option value="height()">
-<option value="html()">
-<option value="innerHeight()">
-<option value="innerWidth()">
-<option value="insertAfter()">
-<option value="insertBefore()">
-<option value="offset()">
-<option value="offsetParent()">
-<option value="outerHeight()">
-<option value="outerWidth()">
-<option value="position()">
-<option value="prepend()">
-<option value="prependTo()">
-<option value="prop()">
-<option value="remove()">
-<option value="removeAttr()">
-<option value="removeClass()">
-<option value="removeProp()">
-<option value="replaceAll()">
-<option value="replaceWith()">
-<option value="scrollLeft()">
-<option value="scrollTop()">
-<option value="text()">
-<option value="toggleClass()">
-<option value="unwrap()">
-<option value="val()">
-<option value="width()">
-<option value="wrap()">
-<option value="wrapAll()">
-<option value="wrapInner()">
-
-</datalist>
-</textarea>
-
-
-<textarea id="divJQAjax" style="display:none">
-<input id="inJQAjax" list="JQAjax" onchange="putJQAjax('scrScript',event)">
-<datalist id="JQAjax">
-<option value="$.ajax()">
-<option value="$.ajaxPrefilter()">
-<option value="$.ajaxSetup()">
-<option value="$.ajaxTransport()">
-<option value="$.get()">
-<option value="$.getJSON()">
-<option value="$.parseJSON()">
-<option value="$.getScript()">
-<option value="$.param()">
-<option value="$.post()">
-<option value=".ajaxComplete()">
-<option value=".ajaxError()">
-<option value=".ajaxSend()">
-<option value=".ajaxStart()">
-<option value=".ajaxStop()">
-<option value=".ajaxSuccess()">
-<option value=".load()">
-<option value=".serialize()">
-<option value=".serializeArray()">
-</datalist>
-</textarea>
-
-</body>
-</html>
+<!DOCTYPE html><html><head><title>HTML Assistant. Author: Mr. Gunjan Mohapatra</title><meta charset="utf-8"><script language='javascript'>window.onerror = CatchErrorfunction CatchError(paraMessage,paraLocation,paraLine, paraCol){	alert(paraMessage + '[error on line number: '  + (paraLine-1) + ']') 	return true}</script><script language='javascript'>var glb_clientHeight,glb_clientWidth,glb_focusElement,glb_frame,ss="<span class='tagColor'>",se="</span>",ts="<span class='tagSE'>",prop="<span class='tagProp'>",att="<span class='tagAtt'>",glb_caretPos=0,glb_editorMouse=!1,glb_acc_prev="accChild1",glb_selectedEditor="scrEditor",glb_WhichEditActive=null,glb_WhichPrevEditActive=null,glb_HoldCode="";function init(){glb_clientHeight=window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight,glb_clientWidth=window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth,document.getElementById(glb_selectedEditor).style.height=glb_clientHeight-109+"px",document.getElementById("divShow").style.height=glb_clientHeight-109+"px",document.getElementById("divAccord").style.height=glb_clientHeight-109+"px",document.getElementById("accChild1").style.height=glb_clientHeight-200+"px",document.getElementById("accChild2").style.height=glb_clientHeight-200+"px",document.getElementById("accChild3").style.height=glb_clientHeight-200+"px",document.getElementById("lblLineNos").style.top=glb_clientHeight-60+"px",document.getElementById(glb_selectedEditor).focus(),glb_focusElement=document.getElementById("btn_preview"),(glb_frame=document.createElement("iframe")).className="frameHide",glb_frame.style.height=glb_clientHeight-109+"px",document.getElementById("EditorColumn").appendChild(glb_frame),Show(null,"scrEditor",""),Show(null,"scrScript","false"),Show(null,"scrCSS","false"),document.getElementById("QJQCSelectors").innerHTML=document.getElementById("divJQSelectors").value,document.getElementById("QJQCEffects").innerHTML=document.getElementById("divJQEffects").value,document.getElementById("QJQCEvents").innerHTML=document.getElementById("divJQEvents").value,document.getElementById("QJQCTraverse").innerHTML=document.getElementById("divJQTraverse").value,document.getElementById("QJQCHTML").innerHTML=document.getElementById("divJQHTML").value,document.getElementById("QJQCAjax").innerHTML=document.getElementById("divJQAjax").value,document.oncontextmenu=function(e){e.preventDefault()}}function HideRunFrame(){glb_frame.className="frameHide"}function EditorKeys(e,t,n){if(9==e.keyCode&&SetTab(e),112==e.keyCode)return e.preventDefault(),void CreateTag(e,l);var l=document.getElementById(t),o=l.value,c=(l.value.substring(l.selectionStart,l.selectionEnd),l.selectionStart),i=l.selectionEnd,s=o.substring(0,c),r=(o.substring(i,o.length),"&nbsp;".repeat(8)),d=s.lastIndexOf("\n"),a=o.substring(s.length,d);0<a.trim().length&&a.indexOf("\t")<0&&" ".repeat(a.length);var u=(o=(o=(o=o.replace(/&/g,"&amp;")).replace(/\t/g,r)).replace(/ /g,"&nbsp;")).lastIndexOf("<");o.lastIndexOf(">");0<=u&&(o=formatStr(o)),""==(o=o.replace(/[\n]/g,"</br>")).trim()?document.getElementById(n).innerHTML="<image src='images/GMASEFLogo.png'><p>GunjanMohapatra ASEF inc.</p><p><i>A Software Engineering Forethought</i></p><p>Start typing HTML here or select controls from toolbox on right side</p>":document.getElementById(n).innerHTML=o,RowsCols(e)}function ScriptKeys(e,t,n){9==event.keyCode&&SetTab(event),112==event.keyCode&&putFunction("scrScript",null),RowsCols(event)}function CSSKeys(e,t,n){9==event.keyCode&&SetTab(event),RowsCols(event)}function SetTab(e){l_editor=e.target;var t=l_editor.value,n=l_editor.value.substring(l_editor.selectionStart,l_editor.selectionEnd),l=l_editor.selectionStart,o=l_editor.selectionEnd,c=t.substring(0,l),i=t.substring(o,t.length);e.preventDefault(),t=c+"\t"+i,0<=n.indexOf("\n")&&(t=c+"\t"+n.replace(/\n/g,"\n\t")+i),l_editor.value=t,glb_caretPos=l+1,l_editor.selectionEnd=glb_caretPos,l_editor.focus()}function RowsCols(e){document.getElementById("lblLineNos").innerText="";var t=0,n=e.target,l=(n.value,n.selectionStart),o=n.value.substring(0,l),c=o.lastIndexOf("\n",l),i=o.match(/\n/g);t=null!=i?i.length+1:1,document.getElementById("lblLineNos").innerText="Row: "+t+" Column: "+(l-c)}function formatStr(e){for(var t="",n="",l=-1,o=(e.lastIndexOf(">"),e.lastIndexOf("<"),e.lastIndexOf("="),0);o<e.length;o++)"<"==(t=e[o])?n+=ts+t+se+ss:">"==t?n+=se+ts+t+se:"/"==t?n+=se+ts+t+se+ss:"="==t?(l=o,n=se+goReverse(n),n+=se+t):n+='"'==t?2<o-l?se+t:se+t+att:"'"==t?2<o-l?se+t:se+t+att:t;return n}function goReverse(e){for(var t=-1,n=e.length;0<=n;n--){if(";"==e[n]){e.substring(n-5,n+1),t=n-5;break}if(" "==e[n]){t=n;break}}return e=e.substring(0,t)+se+prop+e.substring(t,e.length)}function txtScroll(e,t){document.getElementById(t).scrollTop=document.getElementById(e).scrollTop,document.getElementById(t).scrollLeft=document.getElementById(e).scrollLeft}function CreateTag(e){var t,n,l,o=0,c="",i=[];e.preventDefault();var s=e.target,r=s.value.substring(0,s.selectionStart),d=s.value.substring(s.selectionEnd,s.value.length);t=r.lastIndexOf(">"),n=r.lastIndexOf(" "),l=r.lastIndexOf("\n"),-1!=t&&i.push(t),-1!=n&&i.push(n),-1!=l&&i.push(l),0<i.length&&(i.reverse(),o=i[i.length-1]+1),c=s.value.substring(o,s.selectionEnd),r=s.value.substring(0,s.selectionStart-c.length),c=0<=c.lastIndexOf("\n")||0<=c.lastIndexOf(" ")?"\n<"+c.trim()+">\n\n</"+c.trim()+">":"<"+c+">\n\n</"+c+">\n";var a=s.selectionStart+c.length+1,u=r+c+d;s.value=u,s.focus(),glb_focusElement.focus(),s.focus(),s.selectionStart=a-c.length+2,s.selectionEnd=s.selectionStart}function putHTML(e,t){var n=e.target,l=document.getElementById(t);l.value="<!DOCTYPE html>\n<html>\r<head>\n<title></title>\n<meta>\n</head>\n<body>\n\n</body>\n</html>",l.selectionStart=l.value.indexOf("</body>")-1,l.selectionEnd=l.selectionStart,l.focus(),n.focus(),l.focus()}function CreateForm(e,t){e.preventDefault();var n=e.target,l=n.getAttribute("onclick");n.removeAttribute("onclick");var o="",c=document.getElementById(t);o=0<=c.value.indexOf("body")?"\t<form name='' id='form_id' action='' target=''>\n\n\t</form>\n":"<form name='' id='form_id' action='' target=''>\n\n</form>\n";var i=c.value.substring(0,c.selectionStart),s=c.value.substring(c.selectionEnd,c.value.length),r=c.selectionStart,d=i+o+s;c.value=d,c.focus(),n.focus(),c.focus(),c.selectionStart=r+o.length,c.selectionEnd=c.selectionStart,n.setAttribute("onclick",l)}function CreateLabel(e,t){e.preventDefault();var n=e.target,l=n.getAttribute("onclick");n.removeAttribute("onclick");var o="",c=document.getElementById(t);o=0<=c.value.indexOf("body")?"\t<label name='lbl_name' id='lbl_id'>Label</label></br>\n":"<label name='lbl_name' id='lib_id'>Label</label></br>\n";var i=c.value.substring(0,c.selectionStart),s=c.value.substring(c.selectionEnd,c.value.length),r=c.selectionStart,d=i+o+s;c.value=d,c.focus(),n.focus(),c.focus(),c.selectionStart=r+o.length,c.selectionEnd=c.selectionStart,n.setAttribute("onclick",l)}function CreateFromControl(e,t,n){var l,o="";t=glb_selectedEditor,null!==n&&n.preventDefault();var c=(l=""!=e?document.getElementById(e):n.target).getAttribute("onclick");l.removeAttribute("onclick");var i=document.getElementById(t);if(0<=i.value.indexOf("body"))o=l.outerHTML.replace(/\t/g,"")+"</br>\n";else o=l.outerHTML.replace(/\t/g,"")+"</br>\n";var s=i.selectionStart,r=i.value.substr(0,i.selectionStart),d=i.value.substr(i.selectionEnd);i.value=r+o+d,i.selectionStart=s+o.length,i.selectionEnd=i.selectionStart,i.focus(),l.setAttribute("onclick",c),i.focus(),document.getElementById("btn_editorHtml").focus(),i.focus()}function AddJSElements(e,t){var n;document.getElementById("btn_editorScript").click(),null!==t&&t.preventDefault();var l=(n=t.target).getAttribute("onclick");n.removeAttribute("onclick");var o=document.getElementById(e),c=n.innerText.replace(/\t/g,"")+"\n",i=o.selectionStart,s=o.value.substr(0,o.selectionStart),r=o.value.substr(o.selectionEnd);o.value=s+c+r,o.selectionStart=i+c.length,o.selectionEnd=o.selectionStart,o.focus(),n.setAttribute("onclick",l),o.focus(),document.getElementById("btn_editorHtml").focus(),o.focus()}function disableKeys(e){9!=e.keyCode&&112!=e.keyCode||e.preventDefault()}function ShowHideAcc(e){document.getElementById(e).className="accChildShow",glb_acc_prev!=e&&""!=glb_acc_prev&&(document.getElementById(glb_acc_prev).className="accChildHide"),glb_acc_prev=e}function HoldCode(){event.target;var e=document.getElementById(glb_selectedEditor),t=document.getElementById("addScript").value.replace('<script [type=""]>','\n<script [type=""]>\n'+document.getElementById("scrScript").value),n=document.getElementById("addCSS").value.replace("<style>","<style>\n"+document.getElementById("scrCSS").value),l=document.getElementById("txtCDN").value,o=document.getElementById("txtScriptType").value;t=t.replace('[type=""]','type="'+o+'"');var c=document.getElementById("txtCatchError").value,i=e.value.replace("<scrip",c+"\r<scrip");i=0<=i.lastIndexOf("head")?i.replace("<head>","<head>\n"+l+t+n):i.replace("<body>","<head>\n"+l+t+"</head>\n<body>"),document.getElementById("CompleteCodeHolder").value=i,Show(null,"scrEditor","false"),Show(null,"divShow","false"),Show(null,"scrScript","false"),Show(null,"scrCSS","false"),document.getElementById("CompleteCodeHolder").style.display="block"}function RunCode(e,t){var n=e.target,l=document.getElementById(glb_selectedEditor),o=document.getElementById("addScript").value.replace('<script [type=""]>','\n<script [type=""]>\n'+document.getElementById("scrScript").value),c=document.getElementById("addCSS").value.replace("<style>","<style>\n"+document.getElementById("scrCSS").value),i=document.getElementById("txtCDN").value,s=document.getElementById("txtScriptType").value;o=o.replace('[type=""]','type="'+s+'"');var r=0,d=-1,a="",u="";if("Run"==n.innerHTML){var m=document.getElementById("txtCatchError").value,g=l.value.replace("<scrip",m+"\r<scrip");for(g=0<=g.lastIndexOf("head")?g.replace("<head>","<head>\n"+i+o+c):g.replace("<body>","<head>\n"+i+o+c+"</head>\n<body>");0<=r;)0<=(r=g.indexOf("#"))&&(d=g.indexOf(").",r),a=g.substring(0,r-1),u=g.substring(d,g.length),g=a+'document.getElementById("'+g.substring(r+1,d).replace("#","")+")"+u);n.innerText="Code",document.getElementById(t).innerHTML=l.value;l=document.getElementById(glb_selectedEditor);glb_frame.className="frameShow",glb_frame.src="data:text/html;charset=utf-8,"+encodeURI(g),Show(null,"scrEditor","false"),Show(null,"scrScript","false"),Show(null,"scrCSS","false"),Show(null,"divShow","false"),document.getElementById("btn_editorHtml").style.display="none",document.getElementById("btn_editorScript").style.display="none",document.getElementById("btn_editorCss").style.display="none"}else n.innerText="Run",glb_frame.className="frameHide",Show(null,"scrEditor",""),Show(null,"divShow",""),Show(null,"scrScript","false"),Show(null,"scrCSS","false"),document.getElementById("btn_editorHtml").style.display="inline",document.getElementById("btn_editorScript").style.display="inline",document.getElementById("btn_editorCss").style.display="inline",l.focus(),n.focus(),l.focus()}function Show(e,t,n){null!=e&&(glb_WhichEditActive=e.target.id,document.getElementById(glb_WhichEditActive).style.background="lightgreen"),glb_WhichPrevEditActive!=glb_WhichEditActive&&null!=glb_WhichPrevEditActive&&(document.getElementById(glb_WhichPrevEditActive).style.background="silver"),n="false"==n?"none":"block",document.getElementById(t).style.display=n,document.getElementById(t).style.border="",document.getElementById(t).focus(),glb_WhichPrevEditActive=glb_WhichEditActive}function putJQData(e,t){var n=document.getElementById(t.target.id),l='$("'+n.value+'")';if(""!=l.trim()){var o=document.getElementById(e),c=o.selectionStart,i=o.value.substring(0,o.selectionStart),s=o.value.substring(o.selectionEnd);o.value=i+l+s,o.selectionStart=c+l.length,o.selectionEnd=o.selectionStart,n.value="",o.focus(),o.focus(),document.getElementById("btn_editorHtml").focus(),o.focus()}}function putJQEffects(e,t){var n=document.getElementById(t.target.id),l="."+n.value;if(""!=l.trim()){var o=document.getElementById(e),c=o.selectionStart,i=o.value.substring(0,o.selectionStart),s=o.value.substring(o.selectionEnd);o.value=i+l+s,o.selectionStart=c+l.length,o.selectionEnd=o.selectionStart,n.value="",o.focus(),o.focus(),document.getElementById("btn_editorHtml").focus(),o.focus()}}function putJQEvents(e,t){var n=document.getElementById(t.target.id),l="."+n.value;if(""!=l.trim()){var o=document.getElementById(e),c=o.selectionStart,i=o.value.substring(0,o.selectionStart),s=o.value.substr(o.selectionEnd);o.value=i+l+s,o.selectionStart=c+l.length,o.selectionEnd=o.selectionStart,n.value="",o.focus(),o.focus(),document.getElementById("btn_editorHtml").focus(),o.focus()}}function putJQTraverse(e,t){var n=document.getElementById(t.target.id),l="."+n.value;if(""!=l.trim()){var o=document.getElementById(e),c=o.selectionStart,i=o.value.substring(0,o.selectionStart),s=o.value.substr(o.selectionEnd);o.value=i+l+s,o.selectionStart=c+l.length,o.selectionEnd=o.selectionStart,n.value="",o.focus(),o.focus(),document.getElementById("btn_editorHtml").focus(),o.focus()}}function putJQHTML(e,t){var n=document.getElementById(t.target.id),l="."+n.value;if(""!=l.trim()){var o=document.getElementById(e),c=o.selectionStart,i=o.value.substring(0,o.selectionStart),s=o.value.substr(o.selectionEnd);o.value=i+l+s,o.selectionStart=c+l.length,o.selectionEnd=o.selectionStart,n.value="",o.focus(),o.focus(),document.getElementById("btn_editorHtml").focus(),o.focus()}}function putJQAjax(e,t){var n=document.getElementById(t.target.id),l=n.value;if(""!=l.trim()){var o=document.getElementById(e),c=o.selectionStart,i=o.value.substring(0,o.selectionStart),s=o.value.substr(o.selectionEnd);o.value=i+l+s,o.selectionStart=c+l.length,o.selectionEnd=o.selectionStart,n.value="",o.focus(),o.focus(),document.getElementById("btn_editorHtml").focus(),o.focus()}}function putFunction(e,t){var n="function(){\n\n}",l=document.getElementById(e),o=l.selectionStart,c=l.value.substr(0,l.selectionStart),i=l.value.substring(l.selectionEnd),s=l.value.substring(o,l.selectionEnd);o!=l.selectionEnd?(n="\n\nfunction "+s+"()\n{\n\n}",l.value+=n,l.selectionStart=l.value.length-2):(l.value=c+n+i,l.selectionStart=o+(n.length-2)),l.selectionEnd=l.selectionStart,l.focus(),l.focus(),document.getElementById("btn_editorHtml").focus(),l.focus()}function putJQDollar(e,t){var n=document.getElementById(e),l=n.selectionStart,o=n.value.substr(0,n.selectionStart),c=n.value.substring(n.selectionEnd);n.value=o+'$("")'+c,n.selectionStart=l+('$("")'.length-2),n.selectionEnd=n.selectionStart,n.focus(),n.focus(),document.getElementById("btn_editorHtml").focus(),n.focus()}</script><style>*:focus {	outline: none;}.txtEditor{	width:90%;	height:820px;	border-left:1pt solid silver;	border-top:1pt solid silver;	background:transparent;	color:transparent;	position:absolute;	top:0px;	left:0px;	caret-color:black;	overflow:auto;	font-family:Courier New;	font-size:12pt;	font-weight:bold;	resize:none;	}.txtScriptShow{	width:90%;	height:820px;	border-left:1pt solid silver;	border-top:1pt solid silver;	background:WhiteSmoke;	color:Black;	position:absolute;	top:0px;	left:0px;	caret-color:black;	overflow:auto;	font-family:Courier New;	font-size:12pt;	font-weight:bold;	resize:none;	box-shadow:12px 12px 12px silver;	}.txtCSSShow{	width:90%;	height:820px;	border-left:1pt solid silver;	border-top:1pt solid silver;	background:ghostwhite;	color:Black;	position:absolute;	top:0px;	left:0px;	caret-color:black;	overflow:auto;	font-family:Courier New;	font-size:12pt;	font-weight:bold;	resize:none;	box-shadow:12px 12px 12px silver;	}.divShowEditor{	width:90%;	height:820px;	border:0pt solid white;	background:transparent;	position:absolute;	top:3px;	left:3px;	overflow:hidden;	font-family:Courier New;	font-size:12pt;	font-weight:bold;	white-space: nowrap;	box-shadow:12px 12px 12px silver;	}.frameShow{	width:90%;	height:820px;	border-left:1pt solid silver;	border-top:1pt solid silver;	position:absolute;	top:0px;	left:0px;	overflow:auto;	resize:none;	display:block;	z-index:1000;}.frameHide{	width:90%;	height:820px;	border-left:1pt solid silver;	border-top:1pt solid silver;	position:absolute;	top:0px;	left:0px;	overflow:auto;	resize:none;	display:none;	}.tagColor{	color:brown;}.tagSE{	color:blue;}.tagProp{	color:green;}.tagAtt{	color:purple;}.tagBlack{	color:black;}.accHeader{	border-radius:10px;	border:1px solid gray;	background:whitesmoke;	color:black;	text-align:center;	width:80%;	margin:2px;	padding:1px;		box-shadow:2px 2px 2px silver;	font-size:14px;}.accChildHide{	border:1px solid silver;	display:none;	height:0px;	margin:2px;	padding:1px;	border-radius:20px;	width:68%;	position:relative;	height:85%;		}.accChildShow{	border:1px solid silver;	display:block;	height:730px;	margin:2px;	padding:1px;	border-radius:20px;	font-size:14px;	width:80%;	position:relative;	height:85%;	box-shadow:2px 2px 2px silver;		}body{	font-family:arial;	}table{	width:100%;	font-family:arial;	font-size:10pt;	color:black;	position:relative;	white-space:wrap;	border-collapse:collapse;	height:auto;	table-layout:auto;	}td{		font-size:10pt;	vertical-align:top;	padding:2px;	}input{	width:90%;	font-size:10pt;	}col{	width:50%;	}textArea{	width:90%;	font-size:8pt;}div{	}	button{	width:30%;	font-size:8pt;}.buttonHelp{	width:30%;	font-size:15pt;	overflow-wrap:break-word;}.txtCDN{	overflow:auto;	width:90%;	height:20%;	resize:none;	margin:5px;	white-space: nowrap;	font-size:12pt;}</style></head><body onkeydown="disableKeys(event)" onload="init()">		<div id="EditorColumn" style="float:right;width:80%;position:absolute">				<div id="divShow" wrap="off" class="divShowEditor"><image src="images/GMASEFLogo.png"></div>		<textarea id="scrEditor" wrap="off" class="txtEditor"  onblur="EditorKeys(event,'scrEditor','divShow')" onkeyup="EditorKeys(event,'scrEditor','divShow')" onscroll="txtScroll('scrEditor','divShow')" onclick="EditorKeys(event,'scrEditor','divShow')"></textarea>		<textarea placeholder="Write Script here. No need to add script tag, paste the CDN right under Code/CDN section, change script type" id="scrScript" wrap="off" class="txtScriptShow" onblur="ScriptKeys(event,'scrScript','')" onkeyup="ScriptKeys(event,'scrScript','')" onclick="ScriptKeys(event,'scrScript','')"></textarea>		<textarea placeholder="Write CCS here like button{background:red}" id="scrCSS" wrap="off" class="txtCSSShow" onblur="CSSKeys(event,'scrCSS','')" onkeyup="CSSKeys(event,'scrCSS','')" onclick="CSSKeys(event,'scrCSS','')"></textarea>		</div>			<div id="divAccord" style="position:relative;float:right;width:22%;border-left:0px solid gray;font-family:arial;height:auto;display:block;over-flow:hidden">				<div class = "accHeader" onclick="ShowHideAcc('accChild1');btn_editorHtml.click()">			Form Controls		</div>		<div class="accChildShow" id="accChild1">				<br>				<br>				<table border="0">					<tr><td>HTML</td><td><button onclick="putHTML(event,'scrEditor')">HTML</button></td></tr>					<tr><td>Form:</td><td><button  class=""  onclick="CreateForm(event, 'scrEditor')">Form</button></td></tr>					<tr><td>Label:</td><td><button name="" id="label_id" class="" onclick="CreateLabel(event, 'scrEditor')">Label</button></td></tr>					<tr><td>Button:</td><td><button name="" id="btn_id" class="" onclick="CreateFromControl('btn_id', 'scrEditor',event)">Button</button></td></tr>						<tr><td>Text:</td><td><input type="text" name="" id="input_text_id" class="" onclick="CreateFromControl('input_text_id', 'scrEditor',event)"></td></tr>					<tr><td>Radio:</td><td><input type="radio" name="" id="radio_id" class="" onclick="CreateFromControl('radio_id', 'scrEditor',event)"></td></tr>					<tr><td>Checkbox:</td><td><input type="checkbox" name="" id="chkbox_id" class="" onclick="CreateFromControl('chkbox_id', 'scrEditor',event)"></td></tr>					<tr><td>File:</td><td><input type="file" name="" id="file_id" onclick="CreateFromControl('file_id', 'scrEditor',event)"></td></tr>					<tr><td>Submit:</td><td><input type="submit" value="Submit" name="" id="submit_id" onclick="CreateFromControl('submit_id', 'scrEditor',event)"></td></tr>					<tr><td>Color:</td><td><input type="color" name="" id="color_id" class="" onclick="CreateFromControl('color_id', 'scrEditor',event)"></td></tr>					<tr><td>Password:</td><td><input type="password" name="" id="password_id" class="" onclick="CreateFromControl('password_id', 'scrEditor',event)"></td></tr>					<tr><td>Number:</td><td><input type="number" name="" id="number_id" min="1" max="9" class="" onclick="CreateFromControl('number_id', 'scrEditor',event)"></td></tr>					<tr><td>Number:</td><td><input type="number"  name="" id="number_id2" min="0" max="100" step="10" value="30" class="" onclick="CreateFromControl('number_id2', 'scrEditor',event)"></td></tr>										<tr><td>Email:</td><td><input type="email" name="" id="email_id" class="" onclick="CreateFromControl('email_id', 'scrEditor',event)"></td></tr>					<tr><td>Search:</td><td><input type="search" name="" id="search_id" class="" onclick="CreateFromControl('search_id', 'scrEditor',event)"></td></tr>					<tr><td>Telephone:</td><td><input type="tel" name="" id="telephone_id" class="" value="1234567890" onclick="CreateFromControl('telephone_id', 'scrEditor',event)"></td></tr>					<tr><td>URL:</td><td><input type="url" name="" id="url_id" class="" value="URL" onclick="CreateFromControl('url_id', 'scrEditor',event)"></td></tr>					<tr><td>Select:</td><td><select name="" id="select_id" class="" onclick="CreateFromControl('select_id', 'scrEditor',event)">						<option value="">option1</option>					</select></td></tr>					<tr><td>Textarea:</td><td><textarea name="" id="textarea_id" class="" onclick="CreateFromControl('textarea_id', 'scrEditor',event)"></textarea></td></tr>			</table>			</div>		<div class = "accHeader" onclick="ShowHideAcc('accChild2');btn_editorHtml.click()">			Date Time		</div>		<div class="accChildHide" id="accChild2">				<br>				<br>				<div style="margin-left:5px">					<a>Date:</a><br><hr><a><input type="date" name="" id="date_id" max="2015-12-31" min="2015-01-01" class="" onclick="CreateFromControl('date_id', 'scrEditor',event)"></a><br><hr>					<a>Range:</a><br><hr><a><input type="range" name="" id="range_id" min="0" max="0" class="" onclick="CreateFromControl('range_id', 'scrEditor',event)"></a><br><hr>					<a>Month:</a><br><hr><a><input type="month" name="" id="month_id" class="" onclick="CreateFromControl('month_id', 'scrEditor',event)"></a><br><hr>					<a>Week:</a><br><hr><a><input type="week" name="" id="week_id" class="" onclick="CreateFromControl('week_id', 'scrEditor',event)"></a><br><hr>									<a>Time:</a><br><hr><a><input type="time" name="" id="time_id" class="" onclick="CreateFromControl('time_id', 'scrEditor',event)"></a><br><hr>					<a>Datetime:</a><br><hr><a><input type="datetime" name="" id="datetime_id" class="" onclick="CreateFromControl('datetime_id', 'scrEditor',event)"></a><br><hr>					<a>Datetime-local:</a><br><hr><a><input type="datetime-local" name="" id="datetimelocal_id" class="" onclick="CreateFromControl('datetimelocal_id', 'scrEditor',event)"></a><br><hr>					</div>		</div>		<div class = "accHeader" onclick="ShowHideAcc('accChild3');btn_editorHtml.click()">			DRAW		</div>		<div class="accChildHide" id="accChild3">				<br>		<br>		<br>			                    <table id="draw_table_id" border="1" style="font-size:12px;" onclick="CreateFromControl('draw_table_id', 'scrEditor',null)">                        <thead>                            <tr>                                <th>head 1</th>                                <th>head 2</th>                            </tr>                        </thead>                        <tfoot>                            <tr>                                <td>Foot 1</td>                                <td>Foot 2</td>                            </tr>                        </tfoot>                        <tr>                            <td>row 1 col 1</td>                            <td>row 1 col 2</td>                        </tr>                        <tr>                            <td>row 2 col 1</td>                            <td>row 2 col 2</td>                        </tr>                    </table>                    <BR>		    <svg id="svg_circle_id" width="25"  height="25"  style="border:0px solid black;" onclick="CreateFromControl('svg_circle_id', 'scrEditor',null)">                    <circle id="circle_id" cx="12" cy="12" r="10" fill="gray" stroke="black" stroke-width="1px" ></circle>                    </svg>                    <svg id="svg_ellipse_id" width="25"  height="25" style="border:0px solid black;" onclick="CreateFromControl('svg_ellipse_id', 'scrEditor',null)">                    <ellipse id="ellipse_id" cx="13" cy="12" rx="7" ry="11" fill="gray" stroke="black" stroke-width="1px"></ellipse>                    </svg>		    <svg id="svg_rect_id" width="25"  height="25" style="border:0px solid black;" onclick="CreateFromControl('svg_rect_id', 'scrEditor',null)">		    <rect id="rect_id" x="3" y="3" fill="gray" width="18" height="18" stroke="black" stroke-width="1px"></rect>		    </svg>                    <svg id="svg_round_rect_id" width="25"  height="25" style="border:0px solid black;" onclick="CreateFromControl('svg_round_rect_id', 'scrEditor',null)">                    <rect id="round_rect_id" x="3" y="3"  rx="3" ry="3" fill="gray" width="19" height="18" stroke="black" stroke-width="1px"></rect>                    </svg>                    <svg id="svg_line_id" width="25"  height="25" style="border:0px solid black;" onclick="CreateFromControl('svg_line_id', 'scrEditor',null)">                    <line id="line_id"  x1="3" y1="10" x2="20" y2="10" stroke="black"></line>                    </svg>                    <svg id="svg_text_id" width="25"  height="25" style="border:0px solid black;" onclick="CreateFromControl('svg_text_id', 'scrEditor',null)">                    <text id="text_id" x="1" y="12" fill="gray" transform="rotate(5)" stroke="black" stroke-width="1px">TXT</text>                    </svg>                    <svg id="svg_polygon_id" width="25"  height="25" style="border:0px solid black;" onclick="CreateFromControl('svg_polygon_id', 'scrEditor',null)">                    <polygon id="polygon_id" points="15,8,20,20,1,20" fill="gray" stroke="black" stroke-width="1px"></polygon>                    </svg>                                     			</div>		<div class = "accHeader" onclick="ShowHideAcc('accChild4');btn_editorScript.click()">			Code/CDN		</div>		<div class="accChildHide" id="accChild4">			<br>			<textarea id="txtCDN" class="txtCDN"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"/></script>			</textarea>			<br>			&nbsp;&nbsp;Script type:&nbsp;&nbsp;<input type="text" id="txtScriptType" value="text/javascript" style="width:55%">			<br>			<button onclick="putFunction('scrScript',event)">Function</button>			<button onclick="putJQDollar('scrScript',event)">$("")</button>			<hr>			Selectors:<div id="QJQCSelectors" style="margin-left:20px">				</div>				<hr>			Events:<div id="QJQCEvents" style="margin-left:20px">				</div>							<hr>			Traverse:<div id="QJQCTraverse" style="margin-left:20px">				</div>				<hr>			HTML etc:<div id="QJQCHTML" style="margin-left:20px">				</div>				<hr>			Ajax:<div id="QJQCAjax" style="margin-left:20px">				</div>			<hr>			Effects:<div id="QJQCEffects" style="margin-left:20px">				</div>			</div>		<div class = "accHeader" onclick="ShowHideAcc('accChild5')">			Help		</div>				<div class="accChildHide" id="accChild5">				<ul>					<li>					<p>In HTML editor putting the cursor at the end of the word and pressing F1, creates tag</p>					</li>					<li>					<p>In Script editor F1 creates a function like function(){}, but highlighting a word creates a function of that name. e.g main will create a function main(){}</p>							</li>					</ul>					</div>		<div class = "accHeader" onclick="ShowHideAcc('accChild6')">			About		</div>				<div class="accChildHide" id="accChild6">						<p><center><h2>HTML Assistant</h2>			<br><br><br><br><br><br><br><br>						Author:<br>Mr. Gunjan Mohapatra<br><br>			Company:<br>Gunjan Mohapatra ASEF Inc.<br><br>			Location:<br>Toronto, Ontario, Canada<br><br>			<p style="overflow-wrap:break-word">E-mail:<br>ContactGunjanMohapatra@gmail.com</p><br><br>			<br><br>			<p>This appliation is written in HTML5, Javascript and CSS.</p>			</center>			</p>		</div>	</div>	<div style="float:right;width:4%;border:0px solid silver;font-family:arial;height:auto;margin:1px">		<table border=0>		<tr>			<td>				<button id="btn_preview" onclick="RunCode(event,'divShow');Show(event,'CompleteCodeHolder','false')" style="width:100%">Run</button><br>			</td>		<tr>			<td>				&nbsp;			</td>		</tr>		</tr>		<tr>			<td>				<button id="btn_editorHtml" onclick="Show(event,'scrEditor','');Show(event,'divShow','');Show(event,'scrScript','false');Show(event,'scrCSS','false');HideRunFrame();Show(event,'CompleteCodeHolder','false')" style="width:100%">Editor</button><br>			</td>			</tr>		<tr>			<td>				&nbsp;			</td>		</tr>		<tr>			<td>				<button id="btn_editorScript" onclick="Show(event,'scrScript','');Show(event,'divShow','');Show(event,'scrEditor','false');Show(event,'scrCSS','false');HideRunFrame();Show(event,'CompleteCodeHolder','false')" style="width:100%">Script</button><br>			</td>		</tr>		<tr>			<td>				&nbsp;			</td>		</tr>		<tr>			<td>				<button id="btn_editorCss" onclick="Show(event,'scrCSS','');Show(event,'divShow','');Show(event,'scrEditor','false');Show(event,'scrScript','false');HideRunFrame();Show(event,'CompleteCodeHolder','false')" style="width:100%">CSS</button><br>			</td>		</tr>		<tr>			<td>				<br>				<br>				<button id="btn_HoldCode" onclick="HoldCode()" style="width:100%">Your code</button><br>			</td>		</tr>		</table>				</div><label id="lblLineNos" style="position:absolute"></label><textarea id="CompleteCodeHolder" style="position:relative;width:50%;display:none;height:800px"></textarea><textarea id="txtCatchError" style="display:none"><script>window.onerror = CatchError;function CatchError(paraMessage,paraLocation,paraLine, paraCol){alert(paraMessage + '[error on line number: '  + (paraLine-1) + ']');return paraLine-1;}</script></textArea><textarea id="addScript" style="display:none"><script [type=""]>	</script></textarea><textarea id="addCSS" style="display:none"><style>	</style></textarea><textarea id="divJQSelectors" style="display:none"><input id="inJQSelectors" list="JQSelectors" onchange="putJQData('scrScript',event)"><datalist id="JQSelectors"><option value="*"><option value="#id"><option value=".class"><option value=".class,.class"><option value="document"><option value="element"><option value="el1,el2,el3"><option value=":first"><option value=":last"><option value=":even"><option value=":odd"><option value=":first-child"><option value=":first-of-type"><option value=":last-child"><option value=":last-of-type"><option value=":nth-child(n)"><option value=":nth-last-child(n)"><option value=":nth-of-type(n)"><option value=":nth-last-of-type(n)"><option value=":only-child"><option value=":only-of-type"><option value="parent > child"><option value="parent descendant"><option value="element + next"><option value="element ~ siblings"><option value=":eq(index)"><option value=":gt(no)"><option value=":lt(no)"><option value=":not(selector)"><option value=":header"><option value=":animated"><option value=":focus"><option value=":contains(text)"><option value=":has(selector)"><option value=":empty"><option value=":parent"><option value=":hidden"><option value=":visible"><option value=":root"><option value=":lang(language)"><option value="[attribute]"><option value="[attribute=value]"><option value="[attribute!=value]"><option value="[attribute$=value]"><option value="[attribute|=value]"><option value="[attribute^=value]"><option value="[attribute~=value]"><option value="[attribute*=value]"><option value=":input"><option value=":text"><option value=":password"><option value=":radio"><option value=":checkbox"><option value=":submit"><option value=":reset"><option value=":button"><option value=":image"><option value=":file"><option value=":enabled"><option value=":disabled"><option value=":selected"><option value=":checked"></datalist></textarea><textarea id="divJQEffects" style="display:none"><input id="inJQEffects" list="JQEffects" onchange="putJQEffects('scrScript',event)"><datalist id="JQEffects"><option value="animate()"><option value="clearQueue()"><option value="delay()"><option value="dequeue()"><option value="fadeIn()"><option value="fadeOut()"><option value="fadeTo()"><option value="fadeToggle()"><option value="finish()"><option value="hide()"><option value="queue()"><option value="show()"><option value="slideDown()"><option value="slideToggle()"><option value="slideUp()"><option value="stop()"><option value="toggle()"></datalist></textarea><textarea id="divJQEvents" style="display:none"><input id="inJQEvents" list="JQEvents" onchange="putJQEvents('scrScript',event)"><datalist id="JQEvents"><option value="bind()"><option value="blur()"><option value="change()"><option value="click()"><option value="dblclick()"><option value="delegate()"><option value="die()"><option value="error()"><option value="event.currentTarget"><option value="event.data"><option value="event.delegateTarget"><option value="event.isDefaultPrevented()"><option value="event.isImmediatePropagationStopped()"><option value="event.isPropagationStopped()"><option value="event.namespace"><option value="event.pageX"><option value="event.pageY"><option value="event.preventDefault()"><option value="event.relatedTarget"><option value="event.result"><option value="event.stopImmediatePropagation()"><option value="event.stopPropagation()"><option value="event.target"><option value="event.timeStamp"><option value="event.type"><option value="event.which"><option value="focus()"><option value="focusin()"><option value="focusout()"><option value="hover()"><option value="keydown()"><option value="keypress()"><option value="keyup()"><option value="live()"><option value="load()"><option value="mousedown()"><option value="mouseenter()"><option value="mouseleave()"><option value="mousemove()"><option value="mouseout()"><option value="mouseover()"><option value="mouseup()"><option value="off()"><option value="on()"><option value="one()"><option value="$.proxy()"><option value="ready()"><option value="resize()"><option value="scroll()"><option value="select()"><option value="submit()"><option value="toggle()"><option value="trigger()"><option value="triggerHandler()"><option value="unbind()"><option value="undelegate()"><option value="unload()"></datalist></textarea><textarea id="divJQTraverse" style="display:none"><input id="inJQTraverse" list="JQTraverse" onchange="putJQTraverse('scrScript',event)"><datalist id="JQTraverse"><option value="add()"><option value="addBack()"><option value="andSelf()"><option value="children()"><option value="closest()"><option value="contents()"><option value="each()"><option value="end()"><option value="eq()"><option value="filter()"><option value="find()"><option value="first()"><option value="has()"><option value="is()"><option value="last()"><option value="map()"><option value="next()"><option value="nextAll()"><option value="nextUntil()"><option value="not()"><option value="offsetParent()"><option value="parent()"><option value="parents()"><option value="parentsUntil()"><option value="prev()"><option value="prevAll()"><option value="prevUntil()"><option value="siblings()"><option value="slice()"></datalist></textarea><textarea id="divJQHTML" style="display:none"><input id="inJQHTML" list="JQHTML" onchange="putJQHTML('scrScript',event)"><datalist id="JQHTML"><option value="addClass()"><option value="after()"><option value="append()"><option value="appendTo()"><option value="attr()"><option value="before()"><option value="clone()"><option value="css()"><option value="detach()"><option value="empty()"><option value="hasClass()"><option value="height()"><option value="html()"><option value="innerHeight()"><option value="innerWidth()"><option value="insertAfter()"><option value="insertBefore()"><option value="offset()"><option value="offsetParent()"><option value="outerHeight()"><option value="outerWidth()"><option value="position()"><option value="prepend()"><option value="prependTo()"><option value="prop()"><option value="remove()"><option value="removeAttr()"><option value="removeClass()"><option value="removeProp()"><option value="replaceAll()"><option value="replaceWith()"><option value="scrollLeft()"><option value="scrollTop()"><option value="text()"><option value="toggleClass()"><option value="unwrap()"><option value="val()"><option value="width()"><option value="wrap()"><option value="wrapAll()"><option value="wrapInner()"></datalist></textarea><textarea id="divJQAjax" style="display:none"><input id="inJQAjax" list="JQAjax" onchange="putJQAjax('scrScript',event)"><datalist id="JQAjax"><option value="$.ajax()"><option value="$.ajaxPrefilter()"><option value="$.ajaxSetup()"><option value="$.ajaxTransport()"><option value="$.get()"><option value="$.getJSON()"><option value="$.parseJSON()"><option value="$.getScript()"><option value="$.param()"><option value="$.post()"><option value=".ajaxComplete()"><option value=".ajaxError()"><option value=".ajaxSend()"><option value=".ajaxStart()"><option value=".ajaxStop()"><option value=".ajaxSuccess()"><option value=".load()"><option value=".serialize()"><option value=".serializeArray()"></datalist></textarea></body></html>
