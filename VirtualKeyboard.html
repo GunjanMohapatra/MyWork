@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+<script>
+var glb_buttonActivatedColor="blue",glb_buttonInActivatedColor="teal",glb_ActiveControl=null,glb_Prev=null;function doType(t){let e=glb_ActiveControl,l=document.getElementById("cap");if("bkspc"==(t=t.toLowerCase()))return void HandleBackspace();"cl"==t?(l.style.background=l.style.background==glb_buttonActivatedColor?glb_buttonInActivatedColor:glb_buttonActivatedColor,t=""):("&quot"==t&&(t='"'),t=l.style.background==glb_buttonActivatedColor?t.toUpperCase():t.toLowerCase());let o=e.selectionStart,n=e.selectionEnd;o<e.value.length?(e.value=e.value.substring(0,o)+t+e.value.substring(n,e.length),e.selectionStart=o+1,e.selectionEnd=o+1):e.value+=t,document.getElementById("scrDomains").value="",e.focus()}function HandleBackspace(){let t=glb_ActiveControl,e=t.selectionStart,l=t.selectionEnd;t.value=e!=l?t.value.substring(0,e)+t.value.substring(l,t.length):t.value.substring(0,e-1)+t.value.substring(e,t.length),t.selectionStart=e-1,t.selectionEnd=e-1,t.focus()}function gotoweb(){load();let t=glb_ActiveControl,e=t.value.trim(),l=t.selectionStart,o=t.selectionEnd,n=null;if(l!=o?n=(e=t.value.substring(l,o)).split("\n"):""!=e&&(n=e.split("\n")),n.length>0)if(n.length>1){alert("In order to open multiple site all at once, disable pop up blocker");for(let t=0;t<n.length;t++)window.open(n[t],"_blank")}else window.open(n[0],"_blank")}function ActiveControl(){null!=glb_Prev&&(glb_Prev.style.boxShadow="5px 5px 5px black"),glb_ActiveControl=event.target,glb_Prev=glb_ActiveControl,glb_ActiveControl.style.boxShadow="5px 5px 5px orange"}function load(){glb_ActiveControl=document.getElementById("scrInput")}function doCopy(){let t=glb_ActiveControl;t.selectionStart==t.selectionEnd&&glb_ActiveControl.select(),document.execCommand("copy")}
+</script>
+<style>
+body
+{
+	background:black;
+	caret-color:white;
+}
+textarea
+{
+	border:2px solid aqua;
+	border-radius:5px;
+	width:98%;
+	height:100px;
+	font-family:Arial;
+	font-weight:bold;
+	font-size:25px;
+	resize:none;
+	background:darkcyan;
+	color:white;
+	padding-left:5px;
+	
+}
+textarea:hover
+{
+	cursor:default;
+	box-shadow:5px 5px 5px orange;
+}
+td
+{
+	
+}
+
+button
+{
+	border:2px solid aqua;
+	border-radius:5px;
+	width:50px;
+	height:50px;
+	font-family:Arial;
+	font-size:25px;
+	font-weight:bold;
+	background:teal;
+	color:white;
+}
+
+.shiftkeys 
+{
+
+	background:silver;
+	color:black;
+	font-weight:bold;	
+}
+
+.tab
+{
+	width:auto;
+}
+.caps
+{
+	font-size:px;
+	width:auto;
+}
+
+.backspace
+{
+	width:auto;
+}
+
+.enter
+{
+	width:auto;
+}
+
+.space
+{
+	width:100%;
+}
+
+.shift
+{
+	width:auto;
+}
+
+div
+{	
+	padding-left:0px;
+	text-align:center;
+}
+
+select
+{
+	width:auto;
+	border:2px solid aqua;
+	border-radius:5px;
+	font-family:Arial;
+	font-size:25px;
+	font-weight:normal;
+	background:teal;
+	color:white;
+
+}
+.go
+{
+	width:70%;
+	font-family:webdings;
+	font-size:40px;
+}
+input 
+{
+	border:2px solid aqua;
+	border-radius:5px;
+	font-family:Arial;
+	font-size:25px;
+	font-weight:normal;
+	background:teal;
+	color:white;	
+	width:100%;
+	padding-left:2px;
+}
+label
+{
+	font-family:Arial;
+	font-size:15px;
+	font-weight:normal;
+	color:white;	
+}
+
+h3
+{
+	font-family:Arial;
+	font-size:15px;
+	font-weight:normal;
+	color:white;		
+}
+
+::placeholder
+{
+  color: white;
+  opacity: 0.5; 
+}
+
+:-ms-input-placeholder
+{
+  color: white;
+	opacity: 0.5; 	
+}
+
+::-ms-input-placeholder 
+{
+  color: white;
+	opacity: 0.5; 
+}
+
+	
+</style>
+
+<title></title>
+<meta>
+</head>
+<body onload="load()">
+<div>
+<table border=0 cellpadding="2px" style="padding-left:2px;text-align:top" v-align="top">
+
+<tr>
+	<td width="80%">
+		<textarea  id="scrInput" onclick="ActiveControl()"></textarea>
+	</td>
+	<td width="10%">
+	<label><label><textarea onclick="ActiveControl()" style="width:auto" placeholder="Type words to search:"></textarea>
+	</td>
+	<td width="10%">
+		<button style="width:auto" onclick="doCopy()">Copy</button>
+		<button style="width:auto;display:none" onclick="doPaste()">Paste</button>
+	</td>
+
+	
+</tr>
+</table>
+<table cellpadding="3px">
+	<tr>
+	<td><button onclick="doType('~')" class="shiftkeys">~</button></td>
+	<td><button onclick="doType('!')" class="shiftkeys">!</button></td>
+	<td><button onclick="doType('@')" class="shiftkeys">@</button></td>
+	<td><button onclick="doType('#')" class="shiftkeys">#</button></td>
+	<td><button onclick="doType('$')" class="shiftkeys">$</button></td>
+	<td><button onclick="doType('%')" class="shiftkeys">%</button></td>
+	<td><button onclick="doType('^')" class="shiftkeys">^</button></td>
+	<td><button onclick="doType('&')" class="shiftkeys">&</button></td>
+	<td><button onclick="doType('*')" class="shiftkeys">*</button></td>
+	<td><button onclick="doType('(')" class="shiftkeys">(</button></td>
+	<td><button onclick="doType(')')" class="shiftkeys">)</button></td>
+	<td><button onclick="doType('_')" class="shiftkeys">_</button></td>
+	<td><button onclick="doType('+')" class="shiftkeys">+</button></td>
+	<td><button onclick="doType('https://')" class="shift">https://</button></td>
+	</tr>
+</table>
+<table cellpadding="3px">
+	<tr>
+	<td><button onclick="doType('`')">`</button></td>
+	<td><button onclick="doType('1')">1</button></td>
+	<td><button onclick="doType('2')">2</button></td>
+	<td><button onclick="doType('3')">3</button></td>
+	<td><button onclick="doType('4')">4</button></td>
+	<td><button onclick="doType('5')">5</button></td>
+	<td><button onclick="doType('6')">6</button></td>
+	<td><button onclick="doType('7')">7</button></td>
+	<td><button onclick="doType('8')">8</button></td>
+	<td><button onclick="doType('9')">9</button></td>
+	<td><button onclick="doType('0')">0</button></td>
+	<td><button onclick="doType('-')">-</button></td>
+	<td><button onclick="doType('=')">=</button></td>
+	<td><button onclick="doType('bkspc')" class="backspace">Backspace</button></td>
+	</tr>
+</table>
+
+<table cellpadding="3px">
+	<tr>
+	<td><button onclick="doType('\t')" class="tab">Tab&nbsp;</button></td>
+	<td><button onclick="doType('Q')">Q</button></td>
+	<td><button onclick="doType('W')">W</button></td>
+	<td><button onclick="doType('E')">E</button></td>
+	<td><button onclick="doType('R')">R</button></td>
+	<td><button onclick="doType('T')">T</button></td>
+	<td><button onclick="doType('Y')">Y</button></td>
+	<td><button onclick="doType('U')">U</button></td>
+	<td><button onclick="doType('I')">I</button></td>
+	<td><button onclick="doType('O')">O</button></td>
+	<td><button onclick="doType('P')">P</button></td>
+	<td><button onclick="doType('[')">[</button></td>
+	<td><button onclick="doType(']')">]</button></td>
+	<td><button onclick="doType('\\')">\</button></td>
+	<td><button onclick="doType('{')" class="shiftkeys">{</button></td>
+	<td><button onclick="doType('}')" class="shiftkeys">}</button></td>
+	<td><button onclick="doType('|')" class="shiftkeys">|</button></td>
+	</tr>
+</table>
+
+
+<table cellpadding="3px">
+	<tr>
+	<td><button id="cap" onclick="doType('CL')" class="caps">Caps</button></td>
+	<td><button onclick="doType('A')">A</button></td>
+	<td><button onclick="doType('S')">S</button></td>
+	<td><button onclick="doType('D')">D</button></td>
+	<td><button onclick="doType('F')">F</button></td>
+	<td><button onclick="doType('G')">G</button></td>
+	<td><button onclick="doType('H')">H</button></td>
+	<td><button onclick="doType('J')">J</button></td>
+	<td><button onclick="doType('K')">K</button></td>
+	<td><button onclick="doType('L')">L</button></td>
+	<td><button onclick="doType(';')">;</button></td>
+	<td><button onclick="doType('\'')">'</button></td>
+	<td><button onclick="doType(':')" class="shiftkeys">:</button></td>
+	<td><button onclick="doType('&quot')" class="shiftkeys">&quot;</button></td>
+	<td><button onclick="doType('\n')" class="enter">Enter</button></td>
+	</tr>
+
+</table>
+
+<table border=0 cellpadding="3px">
+	<tr>
+	<td style="width:10%">
+		&nbsp;
+	</td>
+	<td><button onclick="doType('Z')">Z</button></td>
+	<td><button onclick="doType('X')">X</button></td>
+	<td><button onclick="doType('C')">C</button></td>
+	<td><button onclick="doType('V')">V</button></td>
+	<td><button onclick="doType('B')">B</button></td>
+	<td><button onclick="doType('N')">N</button></td>
+	<td><button onclick="doType('M')">M</button></td>
+	<td><button onclick="doType(',')">,</button></td>
+	<td><button onclick="doType('.')">.</button></td>
+	<td><button onclick="doType('/')">/</button></td>
+	<td><button onclick="doType('<')" class="shiftkeys"><</button></td>
+	<td><button onclick="doType('>')" class="shiftkeys">></button></td>
+	<td><button onclick="doType('?')" class="shiftkeys">?</button></td>
+	<td>
+		<select id="scrDomains" onchange="doType(this.value)" class="shift">
+			<option></option>
+			<option value='.com'>.com</option>
+			<option value='.edu'>.edu</option>
+			<option value='.gov'>.gov</option>
+			<option value='.int'>.int</option>
+			<option value='.mil'>.mil</option>
+			<option value='.net'>.net</option>
+			<option value='.org'>.org</option>
+		</select>
+
+	</td>
+	</tr>
+</table>
+<table style="width:70%;margin-left:200px" border=0>
+	<tr>
+		<td style="width:30%"><button onclick="doType(' ')" class="space">Space</button></td>
+		<td style="width:20%"><button onclick="gotoweb()" class="go" title="Open website">"<label>Web</label></button></td>
+		<td style="width:40%"></td>
+		
+	</tr>
+	
+</table>
+<h3>Author: Gunjan Mohapatra ASEF Inc. Toronto, Ontario, Canada</h3>
+</div>
+</body>
+</html>
