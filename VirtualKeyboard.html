@@ -3,7 +3,10 @@
 <head>
 	
 <script>
-var glb_buttonActivatedColor="blue",glb_buttonInActivatedColor="teal",glb_ActiveControl=null,glb_Prev=null;function doType(t){let e=glb_ActiveControl,l=document.getElementById("cap");if("bkspc"==(t=t.toLowerCase()))return void HandleBackspace();"cl"==t?(l.style.background=l.style.background==glb_buttonActivatedColor?glb_buttonInActivatedColor:glb_buttonActivatedColor,t=""):("&quot"==t&&(t='"'),t=l.style.background==glb_buttonActivatedColor?t.toUpperCase():t.toLowerCase());let o=e.selectionStart,n=e.selectionEnd;o<e.value.length?(e.value=e.value.substring(0,o)+t+e.value.substring(n,e.length),e.selectionStart=o+1,e.selectionEnd=o+1):e.value+=t,document.getElementById("scrDomains").value="",e.focus()}function HandleBackspace(){let t=glb_ActiveControl,e=t.selectionStart,l=t.selectionEnd;t.value=e!=l?t.value.substring(0,e)+t.value.substring(l,t.length):t.value.substring(0,e-1)+t.value.substring(e,t.length),t.selectionStart=e-1,t.selectionEnd=e-1,t.focus()}function gotoweb(){load();let t=glb_ActiveControl,e=t.value.trim(),l=t.selectionStart,o=t.selectionEnd,n=null;if(l!=o?n=(e=t.value.substring(l,o)).split("\n"):""!=e&&(n=e.split("\n")),n.length>0)if(n.length>1){alert("In order to open multiple site all at once, disable pop up blocker");for(let t=0;t<n.length;t++)window.open(n[t],"_blank")}else window.open(n[0],"_blank")}function ActiveControl(){null!=glb_Prev&&(glb_Prev.style.boxShadow="5px 5px 5px black"),glb_ActiveControl=event.target,glb_Prev=glb_ActiveControl,glb_ActiveControl.style.boxShadow="5px 5px 5px orange"}function load(){glb_ActiveControl=document.getElementById("scrInput")}function doCopy(){let t=glb_ActiveControl;t.selectionStart==t.selectionEnd&&glb_ActiveControl.select(),document.execCommand("copy")}
+
+var glb_buttonActivatedColor="blue",glb_buttonInActivatedColor="teal",glb_ActiveControl=null,glb_Prev=null;function doType(t){let e=glb_ActiveControl,l=document.getElementById("cap");if("bkspc"==(t=t.toLowerCase()))return void HandleBackspace();"cl"==t?(l.style.background=l.style.background==glb_buttonActivatedColor?glb_buttonInActivatedColor:glb_buttonActivatedColor,t=""):("&quot"==t&&(t='"'),t=l.style.background==glb_buttonActivatedColor?t.toUpperCase():t.toLowerCase());let n=e.selectionStart,o=e.selectionEnd;n<e.value.length?(e.value=e.value.substring(0,n)+t+e.value.substring(o,e.length),e.selectionStart=n+1,e.selectionEnd=n+1):e.value+=t,document.getElementById("scrDomains").value="",e.focus()}function HandleBackspace(){let t=glb_ActiveControl,e=t.selectionStart,l=t.selectionEnd;t.value=e!=l?t.value.substring(0,e)+t.value.substring(l,t.length):t.value.substring(0,e-1)+t.value.substring(e,t.length),t.selectionStart=e-1,t.selectionEnd=e-1,t.focus()}function gotoweb(){load();let t=glb_ActiveControl,e=t.value.trim(),l=t.selectionStart,n=t.selectionEnd,o=null;if(l!=n?o=(e=t.value.substring(l,n)).split("\n"):""!=e&&(o=e.split("\n")),o.length>0)if(o.length>1){alert("In order to open multiple site all at once, disable pop up blocker");for(let t=0;t<o.length;t++)window.open(o[t],"_blank","left="+screen.width/2+"px,width="+screen.width/2+"px,height="+screen.height+"px")}else window.open(o[0],"_blank","left="+screen.width/2+"px,width="+screen.width/2+"px,height="+screen.height+"px")}function ActiveControl(){null!=glb_Prev&&(glb_Prev.style.boxShadow="5px 5px 5px black"),glb_ActiveControl=event.target,glb_Prev=glb_ActiveControl,glb_ActiveControl.style.boxShadow="5px 5px 5px orange"}function load(){glb_ActiveControl=document.getElementById("scrInput")}function doCopy(){let t=glb_ActiveControl;t.selectionStart==t.selectionEnd&&glb_ActiveControl.select(),document.execCommand("copy")}
+
+	
 </script>
 <style>
 body
@@ -19,9 +22,9 @@ textarea
 	height:100px;
 	font-family:Arial;
 	font-weight:bold;
-	font-size:25px;
+	font-size:35px;
 	resize:none;
-	background:darkcyan;
+	background:teal;
 	color:white;
 	padding-left:5px;
 	
@@ -31,19 +34,15 @@ textarea:hover
 	cursor:default;
 	box-shadow:5px 5px 5px orange;
 }
-td
-{
-	
-}
 
 button
 {
 	border:2px solid aqua;
 	border-radius:5px;
-	width:50px;
-	height:50px;
+	width:65px;
+	height:65px;
 	font-family:Arial;
-	font-size:25px;
+	font-size:35px;
 	font-weight:bold;
 	background:teal;
 	color:white;
@@ -63,7 +62,7 @@ button
 }
 .caps
 {
-	font-size:px;
+	font-size:40px;
 	width:auto;
 }
 
@@ -99,7 +98,7 @@ select
 	border:2px solid aqua;
 	border-radius:5px;
 	font-family:Arial;
-	font-size:25px;
+	font-size:35px;
 	font-weight:normal;
 	background:teal;
 	color:white;
@@ -107,16 +106,16 @@ select
 }
 .go
 {
-	width:70%;
-	font-family:webdings;
-	font-size:40px;
+	width:100%;
+	font-family:arial;
+	font-size:35px;
 }
 input 
 {
-	border:2px solid aqua;
+	border:0px solid aqua;
 	border-radius:5px;
 	font-family:Arial;
-	font-size:25px;
+	font-size:35px;
 	font-weight:normal;
 	background:teal;
 	color:white;	
@@ -165,7 +164,7 @@ h3
 </head>
 <body onload="load()">
 <div>
-<table border=0 cellpadding="2px" style="padding-left:2px;text-align:top" v-align="top">
+<table border=0 cellpadding="2px" style="padding-left:2px;text-align:top;width:100%" v-align="top">
 
 <tr>
 	<td width="80%">
@@ -265,7 +264,7 @@ h3
 
 <table border=0 cellpadding="3px">
 	<tr>
-	<td style="width:10%">
+	<td style="width:12%">
 		&nbsp;
 	</td>
 	<td><button onclick="doType('Z')">Z</button></td>
@@ -299,7 +298,7 @@ h3
 <table style="width:70%;margin-left:200px" border=0>
 	<tr>
 		<td style="width:30%"><button onclick="doType(' ')" class="space">Space</button></td>
-		<td style="width:20%"><button onclick="gotoweb()" class="go" title="Open website">"<label>Web</label></button></td>
+		<td style="width:20%"><button onclick="gotoweb()" class="go" title="Open website">Web</button></td>
 		<td style="width:40%"></td>
 		
 	</tr>
