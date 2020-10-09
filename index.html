@@ -20,91 +20,122 @@
 }
 .sdwDiv
 {
-	box-shadow:5px 5px 5px silver;
-	border:1px solid silver;
+	box-shadow:15px 15px 15px 	#696969;
+	border:1px solid 	#696969;
+	border-radius: 20px;
 	text-align:center;
-	width:95;
-	margin:5px;
+	width:50vw;
+	margin-bottom:20px;
+}
+
+.sdwDivSub
+{
+	box-shadow:0px 0px 0px silver;
+	border:0px solid silver;
+	text-align:left;
+	width:100%;
+	margin:10px;
 }
 body
 {
-	margin:20px;
+	margin:0px;	
 	
 }
-h1
+h1, h2 ,h3, h4, h5
 {
 	font-family:arial;
 	margin:2px;
 }
-h5
-{
-	font-family:arial;
-	margin:2px;
+a{
+	color:black;
 }
+.footerColor
+{
+	color:black;
+}
+
+
+
 </style>
 </head>
-<body>
+<body style="width:100%;min-height: 100vh;background-image:linear-gradient(360deg,#696969 0%,#ffffff 70%);background-size:cover;background-position: center;background-repeat: no-repeat;">
 <center>
+	<u>
+		<fieldset class="sdwDiv">
+		<legend><h2>C# Blazor WebAssembly Applications</h2></legend>
+			<div class="sdwDivSub">
+				<h3><li><a href="/gmwhiteboard" target="_blank">White Board</li></h3></a>
+			</div>
 	
-	<div class="sdwDiv">
-		<h1><a href="/gmwhiteboard" target="_blank">White Board</h1></a>
-		<h5>A C# Blazor WebAssembly Application</h5>
-	</div>
+			<div class="sdwDivSub">
+				<h3><li><a href="/piechart" target="_blank">Pie Chart creator</li></h3></a>
+		
+			</div>
 	
-	<div class="sdwDiv">
-		<h1><a href="/piechart" target="_blank">Pie Chart creator</h1></a>
-		<h5>A C# Blazor WebAssembly Application</h5>
-	</div>
+			<div class="sdwDivSub">
+				<h3><li><a href="/gmdashboard" target="_blank">Dashboard Meters and Gauges</li></h3></a>
+		
+			</div>
+			<div class="sdwDivSub">
+				<h3><li><a href="/calendar" target="_blank">Celendar and Meeting</li></h3></a>
+			</div>
 	
-	<div class="sdwDiv">
-		<h1><a href="/gmdashboard" target="_blank">Dashboard Meters and Gauges</h1></a>
-		<h5>A C# Blazor WebAssembly Application</h5>
-	</div>
-	<div class="sdwDiv">
-		<h1><a href="/calendar" target="_blank">Celendar and Meeting</h1></a>
-		<h5>A C# Blazor WebAssembly Application</h5>
-	</div>
+		</fieldset>
+
+		<br>
+
+		<fieldset class="sdwDiv">
+				<legend><h2 style="display: inline;">Angular Applications</h2><h5 style="display: inline;">(Angular v.9 & 7)</h5></legend>
+
+			<div class="sdwDivSub">
+				<h3><li><a href="/TimeFinder" target="_blank" title="Time difference calculator between countries">What time will it be?</li></h3></a>
+			
+			</div>
+			<div class="sdwDivSub">
+				<h3><li><a href="/calculator" target="_blank">A different type of calculator</li></h3></a>	
+				
+			</div>
+			<div class="sdwDivSub">
+				<h3><li><a href="/DataToCodeAssistant" target="_blank">Data to Code Assistant</li></h3></a>	
+				
+			</div>
+			
+			<div class="sdwDivSub">
+				<h3><li><a href="/gmgrid" target="_blank" title="To view JSON Data in grid. It has some filter options. v.7">JSON Grid Component</h3></a></li>
+			</div>	
+
+			</fieldset>
+
+			<br>
+
 	
-	<div class="sdwDiv">
-		<h1><a href="/TimeFinder" target="_blank">What time will it be?</h1></a>
-		<h5>Angular v.9</h5>
-	</div>
-	<div class="sdwDiv">
-		<h1><a href="/calculator" target="_blank">A different type of calculator.</h1></a>	
-		<h5>Angular v.9</h5>
-	</div>
-	<div class="sdwDiv">
-		<h1><a href="/DataToCodeAssistant" target="_blank">Data to Code Assistant.</h1></a>	
-		<h5>Angular v.9</h5>
-	</div>
+		<fieldset class="sdwDiv" >
+				<legend><h2>HTML, CSS and Javascript Applications</h2></legend>
+			<div class="sdwDivSub">
+				<h3><li><a href="VirtualKeyboard.html" target="_blank">Virtual Keyboard</li></h3></a>	
+			</div>
+			
+			<div class="sdwDivSub"  >
+				<h3><li><a href="clock.html" target="_blank" >Clock and Calendar</li></h3></a>
+				
+			</div>
+			
+			<div class="sdwDivSub"  >
+				<h3><li><a href="HTMLAssistant.html" target="_blank" title="A handy tool for quick html code">HTML Assistant</li></h3></a>
+				
+			</div>	
+			<div class="sdwDivSub" >
+				<h3><li><a href="TimeSheetInvoice.html" target="_blank" >A Timesheet and Invoice application</li></h3></a>
+				
+			</div>
+			</fieldset>
+
+			<p>
+				<h5 class="footerColor">&copy; 2020 Mr. Gunjan Mohapatra</h5>
+				<h5 class="footerColor">Toronto, Ontario, Canada<br></h5>
+			</p>
 	
-	<div class="sdwDiv">
-		<h1><a href="/gmgrid" target="_blank">JSON Grid Component.</h1></a><h5>To view JSON Data in grid. It has some filter options. Angular v.7</h5>	
-	</div>	
-	<div class="sdwDiv">
-		<h1><a href="VirtualKeyboard.html" target="_blank">Virtual Keyboard</h1></a>	
-	</div>
-	
-	<div class="sdwDiv">
-		<h1><a href="clock.html" target="_blank">Clock and Calendar</h1></a>
-		<h5>HTML, CSS and Javascript</h5>
-	</div>
-	
-	<div class="sdwDiv">
-		<h1><a href="HTMLAssistant.html" target="_blank">HTML Assistant</h1></a><h5>Very handy for quick html code</h5>
-		<h5>HTML, CSS and Javascript</h5>
-	</div>	
-	<div class="sdwDiv">
-		<a href="TimeSheetInvoice.html" target="_blank"><h1>A Timesheet and Invoice application</h1></a>
-		<h5>HTML, CSS and Javascript</h5>
-	</div>
-	
-	<br>
-	<br>
-	<h5>&copy; 2020 Mr. Gunjan Mohapatra</h5>
-	<h5>Toronto, Ontario, Canada<br></h5>
-	
-	
+		</u>
 </center>		
 </body>
 </html>
